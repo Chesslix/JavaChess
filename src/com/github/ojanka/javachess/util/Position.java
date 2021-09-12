@@ -17,7 +17,11 @@ public class Position {
 		return y;
 	}
 	
-	public boolean compareTo(Position arg0) {
+	public boolean equals(Position arg0) {
 		return (this.x == arg0.x && this.y == arg0.y);
+	}
+	
+	public boolean equals(int x, int y) {
+		return (this.x == x && this.y == y);
 	}
 }
