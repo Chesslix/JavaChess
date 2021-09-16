@@ -1,5 +1,6 @@
 package com.github.ojanka.javachess.game.pieces;
 
+import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
@@ -14,6 +15,12 @@ public class Pawn extends Piece {
 	@Override
 	public Position[] getValidPositions() {
 		// TODO Auto-generated method stub
+		// Testing
+		Piece[] pieces = Game.getInstance().getBoard().getPieces();
+		for(Piece piece : pieces){
+			System.out.println("Piece X: "+piece.getCurrentPosition().getX()+", Piece Y: "+piece.getCurrentPosition().getY());
+		}
+
 		return null;
 	}
 

@@ -36,7 +36,7 @@ public class Board {
 	
 	/**
 	 * Moves the piece to the given position and kills every other piece on the same position, no matter in which team it is (to prevent bugs). Position validation has to be done before that method.
-	 * @param piece
+	 * @param toMove
 	 * @param x
 	 * @param y
 	 */

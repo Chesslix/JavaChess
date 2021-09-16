@@ -71,6 +71,8 @@ public class Game {
 	}
 	
 	public static Game createGame() {
-		/* TODO */ return null;
+		/* TODO: Is this correct like that? */
+		instance = new Game();
+		return instance;
 	}
 }
