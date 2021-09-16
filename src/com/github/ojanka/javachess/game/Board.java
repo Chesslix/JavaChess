@@ -50,6 +50,18 @@ public class Board {
 		toMove.setCurrentPosition(x, y);
 	}
 	
+	/**
+	 * Returns a 8x8 two-dimensional-array which contains all Figures at their positions.
+	 * @return Piece[xPos][yPos]
+	 */
+	public Piece[][] getPlayingField() {
+		Piece[][] board = new Piece[8][8];
+		for (Piece piece : Game.getInstance().getBoard().getPieces()) {
+			board[piece.getCurrentPosition().getX()][piece.getCurrentPosition().getY()] = piece;
+		}
+		return board;
+	}
+	
 	public Piece[] getPieces() {
 		return pieces;
 	}
