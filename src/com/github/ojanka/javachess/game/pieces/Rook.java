@@ -4,6 +4,8 @@ import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
+import java.util.LinkedList;
+
 public class Rook extends Piece {
 
 	public Rook(int startX, int startY, ChessColor color) {

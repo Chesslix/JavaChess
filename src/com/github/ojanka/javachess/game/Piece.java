@@ -3,6 +3,8 @@ package com.github.ojanka.javachess.game;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
+import java.util.LinkedList;
+
 public abstract class Piece {
 	private final Position id;
 	private Position currentPosition;

@@ -4,6 +4,8 @@ import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
+import java.util.LinkedList;
+
 public class King extends Piece {
 
 	public King(int startX, int startY, ChessColor color) {
