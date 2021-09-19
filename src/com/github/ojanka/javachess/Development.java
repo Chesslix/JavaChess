@@ -12,11 +12,10 @@ import java.util.stream.Stream;
 public class Development {
 
     private void run(){
-        Game game = Game.createGame();
+        Game game = Game.createGame(ChessColor.WHITE);
 
         // TODO: handled by network manager
         game.setupDefaultBoard();
-        game.setTeam(ChessColor.WHITE);
 
         round(game);
     }

@@ -4,10 +4,13 @@ import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.util.ChessColor;
 
 public class Game {
-	private static Game instance;
-	
+	private static Game instance = null;
 	private ChessColor team;
 	private Board board;
+
+	private Game(ChessColor team){
+		this.team = team;
+	}
 	
 	public static Game getInstance() {
 		return instance;
@@ -70,9 +73,10 @@ public class Game {
 		this.board = new Board(pieces);
 	}
 	
-	public static Game createGame() {
-		/* TODO: Is this correct like that? */
-		instance = new Game();
+	public static Game createGame(ChessColor team) {
+		if(instance == null){
+			instance = new Game(team);
+		}
 		return instance;
 	}
 }
