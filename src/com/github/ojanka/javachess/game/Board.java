@@ -1,13 +1,17 @@
 package com.github.ojanka.javachess.game;
 
+import com.github.ojanka.javachess.util.Position;
+
 public class Board {
 	/**
 	 * Array with all Pieces. Killed pieces are replaced with null
 	 */
 	private Piece[] pieces;
+	private Piece[][] playingField;
 	
 	public Board(Piece[] pieces) {
 		this.pieces = pieces;
+		setPlayingField();
 	}
 
 	/**
@@ -17,11 +21,14 @@ public class Board {
 	 * @return the Piece or null if there is no piece at this position
 	 */
 	public Piece getPiece(int x, int y) {
+		return getPlayingField()[y][x];
+		/*
 		for (Piece piece : pieces) {
 			if (piece == null) continue;
 			if (piece.getCurrentPosition().equals(x, y)) return piece;
 		}
 		return null;
+		 */
 	}
 	
 	/**
@@ -41,25 +48,37 @@ public class Board {
 	 * @param y
 	 */
 	public void movePiece(Piece toMove, int x, int y) {
+		if(getPlayingField()[y][x] != null){
+			killPiece(getPlayingField()[y][x]);
+		}
+		/*
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == null) continue;
-			if (pieces[i].getCurrentPosition().equals(x, y)) {
+			if (pieces[i].getCurrentPosition().equals(new Position(x, y))) {
 				killPiece(pieces[i]);
 			}
 		}
+		 */
 		toMove.setCurrentPosition(x, y);
+		setPlayingField();
 	}
 	
 	/**
 	 * Returns a 8x8 two-dimensional-array which contains all Figures at their positions.
 	 * @return Piece[xPos][yPos]
 	 */
-	public Piece[][] getPlayingField() {
+	public void setPlayingField() {
 		Piece[][] board = new Piece[8][8];
-		for (Piece piece : Game.getInstance().getBoard().getPieces()) {
-			board[piece.getCurrentPosition().getX()][piece.getCurrentPosition().getY()] = piece;
+		// Game.getInstance().getBoard().getPieces()
+		for (Piece piece : this.pieces) {
+			if(piece != null)
+				board[piece.getCurrentPosition().getY()][piece.getCurrentPosition().getX()] = piece;
 		}
-		return board;
+		this.playingField = board;
+	}
+
+	public Piece[][] getPlayingField(){
+		return this.playingField;
 	}
 	
 	public Piece[] getPieces() {

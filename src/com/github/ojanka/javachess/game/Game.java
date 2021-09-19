@@ -2,18 +2,14 @@ package com.github.ojanka.javachess.game;
 
 import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.util.ChessColor;
+import com.github.ojanka.javachess.util.Position;
 
 public class Game {
 	private static Game instance = null;
 	private ChessColor team;
 	private Board board;
 
-	private Game(ChessColor team){
-		this.team = team;
-	}
-	
-	public static Game getInstance() {
-		return instance;
+	private Game(){
 	}
 	
 	public ChessColor getTeam() {
@@ -73,10 +69,24 @@ public class Game {
 		this.board = new Board(pieces);
 	}
 	
-	public static Game createGame(ChessColor team) {
+	public static Game getInstance() {
 		if(instance == null){
-			instance = new Game(team);
+			instance = new Game();
 		}
 		return instance;
+	}
+
+	public void consoleBoard(){
+		for(int i = board.getPlayingField().length-1; i>=0; i--) {
+			for (Piece p : board.getPlayingField()[i]) {
+				if (p != null) {
+					System.out.print("[" + p.getColor() + "]");
+				} else {
+					System.out.print("[     ]");
+				}
+			}
+			System.out.println("  "+i);
+		}
+		System.out.println("   0      1      2      3      4      5      6      7\n");
 	}
 }

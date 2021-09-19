@@ -12,29 +12,26 @@ import java.util.stream.Stream;
 public class Development {
 
     private void run(){
-        Game game = Game.createGame(ChessColor.WHITE);
+        Game game = Game.getInstance();
+        game.setTeam(ChessColor.WHITE);
 
         // TODO: handled by network manager
         game.setupDefaultBoard();
+        test(game);
 
-        round(game);
     }
 
     // TODO: Migrate method to Game
-    private void round(Game game){
+    private void test(Game game){
 
-        Board board = game.getBoard();
-        Piece[] pieces = board.getPieces();
+        game.consoleBoard();
+        game.getBoard().movePiece(game.getBoard().getPiece(0, 1), 0, 2);
+        game.consoleBoard();
+        game.getBoard().movePiece(game.getBoard().getPiece(0, 6), 0, 2);
+        game.consoleBoard();
+        game.getBoard().movePiece(game.getBoard().getPiece(0, 2), 0, 1);
+        game.consoleBoard();
 
-        // Select Piece from team
-        pieces = Arrays.stream(pieces).filter(piece -> piece.getColor() == game.getTeam()).toArray(Piece[]::new);
-
-        // TODO: Implement UI Package with selected piece id
-        // fake package
-        Position selected = new Position(1,0);
-
-        // select selected
-        //filter piece to selected
     }
 
     public static void main(String[] args){
