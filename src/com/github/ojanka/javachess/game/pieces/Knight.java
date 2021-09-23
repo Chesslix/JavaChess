@@ -17,7 +17,7 @@ public class Knight extends Piece {
 	@Override
 	public Position[] getValidPositions() {
 		// get bitboard allies marked as 1
-		long bitboard = Game.getInstance().getBoard().getAlliesAsBitmap(this.getColor());
+		long bitboard = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
 		// get current position and translate to fit to 1 dimensional array
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
 		// all possible moves according to pattern

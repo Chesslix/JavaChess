@@ -90,7 +90,7 @@ public class Board {
         return pieces;
     }
 
-    public long getAlliesAsBitmap(ChessColor pieceColor) {
+    public long getAsBitmapByColor(ChessColor pieceColor) {
         long bitmap = 0L;
         for (Piece piece : this.pieces) {
             if (piece == null) continue;
