@@ -102,4 +102,17 @@ public class Board {
         }
         return bitmap;
     }
+
+    public long getEnemiesAsBitmap(ChessColor pieceColor) {
+        long bitmap = 0L;
+        for (Piece piece : this.pieces) {
+            if (piece == null) continue;
+            if (piece.getColor() != pieceColor) {
+                int x = piece.getCurrentPosition().getX();
+                int y = piece.getCurrentPosition().getY();
+                bitmap |= 1L << (x + 8 * y);
+            }
+        }
+        return bitmap;
+    }
 }
