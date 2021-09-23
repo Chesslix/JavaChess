@@ -23,7 +23,8 @@ public class Development {
 
     // TODO: Migrate method to Game
     private void test(Game game){
-
+        System.out.println(ChessColor.getOpposite(ChessColor.WHITE));
+        System.out.println(ChessColor.getOpposite(ChessColor.BLACK));
         game.consoleBoard();
         game.getBoard().movePiece(game.getBoard().getPiece(0, 1), 0, 2);
         game.consoleBoard();
