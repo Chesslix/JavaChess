@@ -27,7 +27,7 @@ public class Development {
         Piece[] testGame = {
                 // WHITE:
                 // Figures =====================================
-                new Rook(1, 0, ChessColor.WHITE),		// left Rook
+                new Rook(2, 3, ChessColor.WHITE),		// left Rook
                 new Knight(1, 5, ChessColor.WHITE),		// left Knight
                 new King(3, 1, ChessColor.WHITE),		// 		King
                 new Queen(4, 2, ChessColor.WHITE),		// 		Queen
@@ -56,7 +56,7 @@ public class Development {
                 new Pawn(3, 6, ChessColor.BLACK),		// 4 Pawn
         };
         game.setupBoard(testGame);
-        Position[] positions = game.getBoard().getPiece(1, 0).getValidPositions();
+        Position[] positions = game.getBoard().getPiece(2, 3).getValidPositions();
         for(Position position : positions){
             System.out.println("Pos Y: "+position.getY()+"| Pos X: "+position.getX());
         }
