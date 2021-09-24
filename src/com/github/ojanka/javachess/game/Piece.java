@@ -34,5 +34,8 @@ public abstract class Piece {
 	public Position getId() {
 		return id;
 	}
-	
+
+	public String getClassName(){
+		return this.getClass().getSimpleName().substring(0,2)+this.getColor().toString().charAt(0);
+	}
 }
