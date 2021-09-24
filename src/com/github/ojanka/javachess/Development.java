@@ -50,13 +50,13 @@ public class Development {
                 new Bishop(5, 7, ChessColor.BLACK),		// right Bishop
                 new Knight(6, 7, ChessColor.BLACK),		// right Knight
                 // Pawns =======================================
-                new Pawn(0, 6, ChessColor.BLACK),		// 1 Pawn
+                new Pawn(0, 2, ChessColor.BLACK),		// 1 Pawn
                 new Pawn(1, 6, ChessColor.BLACK),		// 2 Pawn
                 new Pawn(2, 6, ChessColor.BLACK),		// 3 Pawn
                 new Pawn(3, 6, ChessColor.BLACK),		// 4 Pawn
         };
         game.setupBoard(testGame);
-        Position[] positions = game.getBoard().getPiece(2, 3).getValidPositions();
+        Position[] positions = game.getBoard().getPiece(5, 7).getValidPositions();
         for(Position position : positions){
             System.out.println("Pos Y: "+position.getY()+"| Pos X: "+position.getX());
         }
