@@ -56,11 +56,11 @@ public class Development {
                 new Pawn(3, 6, ChessColor.BLACK),		// 4 Pawn
         };
         game.setupBoard(testGame);
-        Position[] positions = game.getBoard().getPiece(2, 3).getValidPositions();
+        Position[] positions = game.getBoard().getPiece(4, 7).getValidPositions();
         for(Position position : positions){
             System.out.println("Pos Y: "+position.getY()+"| Pos X: "+position.getX());
         }
-
+        System.out.println();
         game.consoleBoard();
 
     }
