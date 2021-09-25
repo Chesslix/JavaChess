@@ -68,6 +68,11 @@ public class Game {
 		};
 		this.board = new Board(pieces);
 	}
+
+	// TODO: For testing
+	public void setupBoard(Piece[] pieces){
+		this.board = new Board(pieces);
+	}
 	
 	public static Game getInstance() {
 		if(instance == null){
@@ -80,7 +85,7 @@ public class Game {
 		for(int i = board.getPlayingField().length-1; i>=0; i--) {
 			for (Piece p : board.getPlayingField()[i]) {
 				if (p != null) {
-					System.out.print("[" + p.getColor() + "]");
+					System.out.print("[ " + p.getClassName() + " ]");
 				} else {
 					System.out.print("[     ]");
 				}
