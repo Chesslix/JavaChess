@@ -1,8 +1,11 @@
 package com.github.ojanka.javachess.game.pieces;
 
+import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
+
+import java.util.ArrayList;
 
 public class King extends Piece {
 
@@ -13,8 +16,17 @@ public class King extends Piece {
 
 	@Override
 	public Position[] getValidPositions() {
-		// TODO Auto-generated method stub
-		return null;
+		long bitboard = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
+		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+		int[] possibleMoves = {1, 7, 8, 9, -1, -7, -8, -9};
+		ArrayList<Position> validPositions = new ArrayList<>();
+		for(int move: possibleMoves){
+			int nPos = cPos + move;
+			if(nPos > 63 || nPos < 0) continue;
+			if(((bitboard >> nPos) & 1) == 1) continue;
+			validPositions.add(new Position(nPos & 7, nPos >> 3));
+		}
+		return validPositions.toArray(Position[]::new);
 	}
 
 	@Override
