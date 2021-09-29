@@ -31,6 +31,14 @@ public class Board {
 		 */
 	}
 	
+	public Piece getPieceByStartPos(int startPosX, int startPosY) {
+		for (Piece piece : pieces) {
+			if (piece == null) continue;
+			if (piece.getId().equals(startPosX, startPosY)) return piece;
+		}
+		return null;
+	}
+	
 	/**
 	 * Removes the piece from the board
 	 * @param toKill

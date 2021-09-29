@@ -2,12 +2,16 @@ package com.github.ojanka.javachess.game;
 
 import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.util.ChessColor;
+import com.github.ojanka.javachess.util.GameState;
 import com.github.ojanka.javachess.util.Position;
 
 public class Game {
 	private static Game instance = null;
 	private ChessColor team;
 	private Board board;
+	
+	private GameState gameState;
+	public boolean myTurn;
 
 	private Game(){
 	}
@@ -67,6 +71,14 @@ public class Game {
 				new Pawn(7, 6, ChessColor.BLACK),		// 8 Pawn
 		};
 		this.board = new Board(pieces);
+	}
+	
+	public GameState getGameState() {
+		return gameState;
+	}
+	
+	public void setGameState(GameState gameState) {
+		this.gameState = gameState;
 	}
 	
 	public static Game getInstance() {

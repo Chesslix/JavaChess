@@ -9,8 +9,29 @@ public class Packet {
 		this.jsonObject = new JSONObject(json);
 	}
 	
+	public Packet(PacketType type, String body) {
+		this.jsonObject = new JSONObject();
+		jsonObject.put("id", type.toInt());
+		jsonObject.put("body", new JSONObject(body));
+	}
+	
+	public Object readProperty(String path) {
+		String[] pathNodes = path.split("\\.");
+		Object currentNode = jsonObject.getJSONObject("body");
+		for (int i = 0; i < pathNodes.length; i++) {
+			if (currentNode != null && currentNode instanceof JSONObject) {
+				currentNode = ((JSONObject) currentNode).get(pathNodes[i]);
+			} else break;
+		}
+		return currentNode;
+	}
+	
 	public PacketType getType() {
 		return PacketType.fromId(jsonObject.getInt("id"));
+	}
+	
+	public String toJson() {
+		return jsonObject.toString();
 	}
 	
 	/**
@@ -26,11 +47,13 @@ public class Packet {
 	public static enum PacketType {
 		SB_HANDSHAKE(0),
 		SB_JOIN_GAME(1),
+		CB_SET_COLOR(7),
 		CB_SETUP_DEFAULT_BOARD(2),
 		ALL_MOVE_PIECE(3),
 		ALL_FINISH_TURN(4),
 		ALL_WIN_GAME(5),
-		SB_DISCONNECT(6);
+		SB_DISCONNECT(6),
+		UNSUPPORTED(-1);
 		
 		private int type;
 
@@ -48,6 +71,8 @@ public class Packet {
 				return SB_HANDSHAKE;
 			case 1:
 				return SB_JOIN_GAME;
+			case 7:
+				return CB_SET_COLOR;
 			case 2:
 				return CB_SETUP_DEFAULT_BOARD;
 			case 3:
@@ -59,7 +84,7 @@ public class Packet {
 			case 6:
 				return SB_DISCONNECT;
 			default:
-				return null;
+				return UNSUPPORTED;
 			}
 		}
 	}
