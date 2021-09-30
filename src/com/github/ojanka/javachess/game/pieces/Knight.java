@@ -20,14 +20,16 @@ public class Knight extends Piece {
 		long bitboard = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
 		// get current position and translate to fit to 1 dimensional array
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+		// bitmap of all possible moves!
+		long possibleMovesLookUp = knightMovesLookUp(cPos);
 		// all possible moves according to pattern
 		int[] possibleMoves = {6, 15, 17, 10, -6, -15, -17, -10};
 		ArrayList<Position> validPositions = new ArrayList<>();
 		for(int move: possibleMoves){
 			// add current position with move value to calculate new "index" move
 			int nPos = cPos + move;
-			// check if position is out of board
-			if(nPos > 63 || nPos < 0) continue;
+			// ungodly out of bounds check
+			if(((possibleMovesLookUp >> nPos) & 1) != 1) continue;
 			// check if ally on position, if not means either empty or enemy
 			if(((bitboard >> nPos) & 1) == 1) continue;
 			// set new position, nPos >> 3 is the same as nPos / 8
@@ -43,4 +45,15 @@ public class Knight extends Piece {
 		return false;
 	}
 
+	private long knightMovesLookUp(long knightPos){
+			// super complex hardcore bithacks! :)
+			long bitboardKnight = 1L << knightPos;
+			long l1 = (bitboardKnight >> 1) & 0x7f7f7f7f7f7f7f7fL;
+			long l2 = (bitboardKnight >> 2) & 0x3f3f3f3f3f3f3f3fL;
+			long r1 = (bitboardKnight << 1) & 0xfefefefefefefefeL;
+			long r2 = (bitboardKnight << 2) & 0xfcfcfcfcfcfcfcfcL;
+			long h1 = l1 | r1;
+			long h2 = l2 | r2;
+			return (h1<<16) | (h1>>16) | (h2<<8) | (h2>>8);
+	}
 }
