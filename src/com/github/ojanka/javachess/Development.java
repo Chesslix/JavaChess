@@ -25,6 +25,7 @@ public class Development {
     // TODO: Migrate method to Game
     private void test(Game game){
         Piece[] testGame = {
+                /*
                 // WHITE:
                 // Figures =====================================
                 new Rook(2, 3, ChessColor.WHITE),		// left Rook
@@ -54,9 +55,14 @@ public class Development {
                 new Pawn(1, 6, ChessColor.BLACK),		// 2 Pawn
                 new Pawn(2, 6, ChessColor.BLACK),		// 3 Pawn
                 new Pawn(3, 6, ChessColor.BLACK),		// 4 Pawn
+
+                */
+                new Pawn(0, 1, ChessColor.WHITE),		// 4 Pawn
+                new Pawn(1, 2, ChessColor.BLACK),		// 4 Pawn
+                new Pawn(0, 3, ChessColor.BLACK),		// 4 Pawn
         };
         game.setupBoard(testGame);
-        Position[] positions = game.getBoard().getPiece(4, 7).getValidPositions();
+        Position[] positions = game.getBoard().getPiece(0, 1).getValidPositions();
         for(Position position : positions){
             System.out.println("Pos Y: "+position.getY()+"| Pos X: "+position.getX());
         }

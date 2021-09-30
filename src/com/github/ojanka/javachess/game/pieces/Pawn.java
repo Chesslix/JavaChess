@@ -19,13 +19,14 @@ public class Pawn extends Piece {
 	public Position[] getValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
 		long bitboardEnemies = Game.getInstance().getBoard().getAsBitmapByColor(ChessColor.getOpposite(this.getColor()));
-
-		ArrayList<Position> validPositions = new ArrayList<>();
-		int[] possibleMoves = {9,7};
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+
+		long possibleMovesLookUp = pawnMovesLookUp(cPos);
+		int[] possibleMoves = {9,7};
+		ArrayList<Position> validPositions = new ArrayList<>();
 		for(int move : possibleMoves){
 			int nPos = cPos + move;
-			if(nPos > 63 || nPos < 0) continue;
+			if(((possibleMovesLookUp >> nPos) & 1) != 1) continue;
 			if(((bitboardEnemies >> nPos) & 1) == 0) continue;
 			validPositions.add(new Position(nPos & 7, nPos >> 3));
 		}
@@ -49,7 +50,16 @@ public class Pawn extends Piece {
 		return false;
 	}
 
-	public boolean getStart() {
-		return start;
+	// gets all possible moves including two step start
+	private long pawnMovesLookUp(long pawnPos){
+		long bitboardPawn = 1L << pawnPos;
+		long l1 = (bitboardPawn >> 1) & 0x7f7f7f7f7f7f7f7fL;
+		long r1 = (bitboardPawn << 1) & 0xfefefefefefefefeL;
+		long h1 = l1 | r1;
+		return (h1<<8) | (bitboardPawn << 8) | (bitboardPawn << 16);
+	}
+
+	public boolean isStart(){
+		return this.start;
 	}
 }
