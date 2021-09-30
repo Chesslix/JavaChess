@@ -43,13 +43,6 @@ public class Pawn extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	@Override
-	public boolean isPositionValid(Position arg0) {
-		// TODO Auto-generated method stub
-		// if return true also do this.start = false;
-		return false;
-	}
-
 	// gets all possible moves including two step start
 	private long pawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;

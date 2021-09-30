@@ -43,10 +43,4 @@ public class Rook extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	@Override
-	public boolean isPositionValid(Position arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

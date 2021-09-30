@@ -17,8 +17,6 @@ public abstract class Piece {
 	
 	public abstract Position[] getValidPositions();
 	
-	public abstract boolean isPositionValid(Position arg0);
-	
 	public Position getCurrentPosition() {
 		return currentPosition;
 	}

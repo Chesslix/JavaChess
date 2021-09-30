@@ -30,12 +30,6 @@ public class King extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	@Override
-	public boolean isPositionValid(Position arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 	private long kingMovesLookUp(long kingPos){
 		// super complex hardcore bithacks! :)
 		long bitboardKing = 1L << kingPos;
