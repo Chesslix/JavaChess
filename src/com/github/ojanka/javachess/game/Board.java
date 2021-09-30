@@ -31,30 +31,36 @@ public class Board {
 		}
 		return null;
 		 */
-    }
-
-    /**
-     * Removes the piece from the board
-     *
-     * @param toKill
-     */
-    public void killPiece(Piece toKill) {
-        for (int i = 0; i < pieces.length; i++) {
-            if (pieces[i] == toKill) pieces[i] = null;
-        }
-    }
-
-    /**
-     * Moves the piece to the given position and kills every other piece on the same position, no matter in which team it is (to prevent bugs). Position validation has to be done before that method.
-     *
-     * @param toMove
-     * @param x
-     * @param y
-     */
-    public void movePiece(Piece toMove, int x, int y) {
-        if (getPlayingField()[y][x] != null) {
-            killPiece(getPlayingField()[y][x]);
-        }
+	}
+	
+	public Piece getPieceByStartPos(int startPosX, int startPosY) {
+		for (Piece piece : pieces) {
+			if (piece == null) continue;
+			if (piece.getId().equals(startPosX, startPosY)) return piece;
+		}
+		return null;
+	}
+	
+	/**
+	 * Removes the piece from the board
+	 * @param toKill
+	 */
+	public void killPiece(Piece toKill) {
+		for (int i = 0; i < pieces.length; i++) {
+			if (pieces[i] == toKill) pieces[i] = null;
+		}
+	}
+	
+	/**
+	 * Moves the piece to the given position and kills every other piece on the same position, no matter in which team it is (to prevent bugs). Position validation has to be done before that method.
+	 * @param toMove
+	 * @param x
+	 * @param y
+	 */
+	public void movePiece(Piece toMove, int x, int y) {
+		if(getPlayingField()[y][x] != null){
+			killPiece(getPlayingField()[y][x]);
+		}
 		/*
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == null) continue;
