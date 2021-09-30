@@ -18,11 +18,12 @@ public class King extends Piece {
 	public Position[] getValidPositions() {
 		long bitboard = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+		long possibleMovesLookUp = kingMovesLookUp(cPos);
 		int[] possibleMoves = {1, 7, 8, 9, -1, -7, -8, -9};
 		ArrayList<Position> validPositions = new ArrayList<>();
 		for(int move: possibleMoves){
 			int nPos = cPos + move;
-			if(nPos > 63 || nPos < 0) continue;
+			if(((possibleMovesLookUp >> nPos) & 1) != 1) continue;
 			if(((bitboard >> nPos) & 1) == 1) continue;
 			validPositions.add(new Position(nPos & 7, nPos >> 3));
 		}
@@ -33,6 +34,15 @@ public class King extends Piece {
 	public boolean isPositionValid(Position arg0) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	private long kingMovesLookUp(long kingPos){
+		// super complex hardcore bithacks! :)
+		long bitboardKing = 1L << kingPos;
+		long l1 = (bitboardKing >> 1) & 0x7f7f7f7f7f7f7f7fL;
+		long r1 = (bitboardKing << 1) & 0xfefefefefefefefeL;
+		long h1 = l1 | r1;
+		return (h1<<8) | (h1>>8) | h1 | (bitboardKing >> 8) | (bitboardKing << 8);
 	}
 
 }
