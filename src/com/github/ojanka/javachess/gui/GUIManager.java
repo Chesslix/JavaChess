@@ -3,14 +3,14 @@ package com.github.ojanka.javachess.gui;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import java.nio.IntBuffer;
-
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
 import com.github.ojanka.javachess.gui.callbacks.CallbackHandler;
 import com.github.ojanka.javachess.gui.screens.MainMenuScreen;
 import com.github.ojanka.javachess.gui.screens.Screen;
+import com.github.ojanka.javachess.gui.texturemanager.Texture;
+import com.github.ojanka.javachess.gui.texturemanager.TextureManager;
 
 public class GUIManager {
 	public long window;
@@ -33,7 +33,6 @@ public class GUIManager {
 		glfwDefaultWindowHints();
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-		
 		this.window = glfwCreateWindow(950, 850, "JavaChess", 0, 0);
 		
 		//Add callbacks
@@ -42,8 +41,15 @@ public class GUIManager {
 		glfwSetMouseButtonCallback(this.window, callbackHandler.mouseButton);
 		
 		glfwMakeContextCurrent(window);
+		GL.createCapabilities();
+		
+		int[] windowSize = getWindowSize();
+		glOrtho(0.f, windowSize[0], windowSize[1], 0.f, 0.f, 1.f);
+		
 		// Enable v-sync
 		glfwSwapInterval(1);
+		
+		loadTextures();
 		
 		centerWindowOnMainScreen();
 		
@@ -52,9 +58,11 @@ public class GUIManager {
 		this.screen = new MainMenuScreen();
 	}
 	
+	public void loadTextures() {
+	}
+	
 	public void gameLoop() {
 		while(this.isRunning) {
-			GL.createCapabilities();
 			glfwPollEvents();
 			
 			// Clear window
@@ -100,12 +108,47 @@ public class GUIManager {
 		glfwSetWindowPos(window, workareaWidth[0] / 2 - windowWidth[0] / 2, workareaHeight[0] / 2 - windowHeight[0] / 2);
 	}
 	
+	public int[] getWindowSize() {
+		int[] windowWidth = new int[1];
+		int[] windowHeight = new int[1];
+		glfwGetWindowSize(window, windowWidth, windowHeight);
+		return new int[] {windowWidth[0], windowHeight[0]};
+ 	}
+	
 	public void changeScreen(Screen screen) {
 		if (this.screen != null) {
 			this.screen.dispatch();
 		}
 		screen.init();
 		this.screen = screen;
+	}
+	
+	public void drawText() {
+		
+	}
+	
+	public void drawTexture(Texture texture, int x, int y) {
+		drawTexture(texture, x, y, texture.getWidth(), texture.getHeight());
+	}
+	
+	public void drawTexture(Texture texture, int x, int y, int width, int height) {
+		glEnable(GL_TEXTURE_2D);
+		texture.bind();
+		
+		glBegin(GL_QUADS);
+		glTexCoord2f(0, 0);
+		glVertex2f(x, y);
+		
+		glTexCoord2f(1, 0);
+		glVertex2f(width, y);
+		
+		glTexCoord2f(1, 1);
+		glVertex2f(width, height);
+		
+		glTexCoord2f(0, 1);
+		glVertex2f(x, height);
+		
+		glDisable(GL_TEXTURE_2D);
 	}
 	
 	public Screen getScreen() {
