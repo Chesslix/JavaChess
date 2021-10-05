@@ -1,15 +1,17 @@
 package com.github.ojanka.javachess.game;
 
 import com.github.ojanka.javachess.game.pieces.*;
+import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameState;
 import com.github.ojanka.javachess.util.Position;
+import org.w3c.dom.events.Event;
 
 public class Game {
 	private static Game instance = null;
 	private ChessColor team;
 	private Board board;
-	
+	private EventLogger logger;     // first logger creation
 	private GameState gameState;
 	public boolean myTurn;
 
@@ -71,11 +73,13 @@ public class Game {
 				new Pawn(7, 6, ChessColor.BLACK),		// 8 Pawn
 		};
 		this.board = new Board(pieces);
+		this.logger = EventLogger.getInstance();
 	}
 
 	// TODO: For testing
 	public void setupBoard(Piece[] pieces){
 		this.board = new Board(pieces);
+		this.logger = EventLogger.getInstance();
 	}
 	
 	public GameState getGameState() {

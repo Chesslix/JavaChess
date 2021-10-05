@@ -30,6 +30,21 @@ public class King extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
+	// TODO: Implement Check checker :)
+	public boolean isCheck(){
+		return false;
+	}
+
+	// TODO: Implement Checkmate checker
+	public boolean isCheckmate(){
+		return false;
+	}
+
+	// TODO: Implement Draw (Player can't move any piece or King is Checkmate) checker
+	public boolean isDraw(){
+		return false;
+	}
+
 	private long kingMovesLookUp(long kingPos){
 		// super complex hardcore bithacks! :)
 		long bitboardKing = 1L << kingPos;

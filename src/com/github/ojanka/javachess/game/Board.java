@@ -1,7 +1,10 @@
 package com.github.ojanka.javachess.game;
 
+import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventException;
 
 public class Board {
     /**
@@ -71,6 +74,7 @@ public class Board {
 		 */
         toMove.setCurrentPosition(x, y);
         setPlayingField();
+        EventLogger.getInstance().log(toMove);
     }
 
     /**
