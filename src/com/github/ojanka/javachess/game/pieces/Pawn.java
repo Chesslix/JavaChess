@@ -52,7 +52,9 @@ public class Pawn extends Piece {
 		return (h1<<8) | (bitboardPawn << 8) | (bitboardPawn << 16);
 	}
 
+	/* Why? Nino why?
 	public boolean isStart(){
 		return this.start;
 	}
+	 */
 }
