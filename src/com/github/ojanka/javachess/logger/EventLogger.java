@@ -6,10 +6,16 @@ import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class EventLogger {
     private static EventLogger instance = null;
+    private String filePath = null;
     private int index = 1;
     private Piece[][] lastboard;
 
@@ -29,12 +35,38 @@ public class EventLogger {
         return instance;
     }
 
-    private void fileOutput(){
+    private void fileOutput(String log) {
+        try{
+            if(this.filePath == null){
+                this.filePath = "data/game_"+new SimpleDateFormat("yyyy.MM.dd-HH.mm.ss").format(new Date())+".log";
+            }
+            File file = new File(this.filePath);
+            OutputStreamWriter writer = new OutputStreamWriter(
+                    new FileOutputStream(file,true), StandardCharsets.UTF_8);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+            bufferedWriter.write(log+"\t"+new Timestamp(System.currentTimeMillis())+"\tChesslix-JavaChess Inc."+"\r\n");
+            // Maybe keep the stream running and close it on program close
+            bufferedWriter.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
 
-    private void fileInput(){
-
+    private String fileInput(String path){
+        StringBuilder fileContent = new StringBuilder();
+        try{
+            File file = new File(path);
+            InputStreamReader reader = new InputStreamReader(
+                    new FileInputStream(file), StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            while (bufferedReader.ready()){
+                fileContent.append(bufferedReader.readLine()).append("\n");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return fileContent.toString();
     }
 
     public void log(Piece p){
@@ -112,7 +144,9 @@ public class EventLogger {
         // TESTING
         System.out.println(log);
 
-        // do stuff
+        // Write to file
+        fileOutput(log);
+
         // Update attributes
         updateLastBoard();
         this.index++;
@@ -131,6 +165,7 @@ public class EventLogger {
         }};
         return dict.get(pos.getX());
     }
+
     private String translatePositionYToNotation(Position pos){
         return String.valueOf(pos.getY()+1);
     }
