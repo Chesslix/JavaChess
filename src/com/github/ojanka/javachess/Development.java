@@ -4,6 +4,7 @@ import com.github.ojanka.javachess.game.Board;
 import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.game.pieces.*;
+import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
@@ -17,7 +18,7 @@ public class Development {
         game.setTeam(ChessColor.WHITE);
 
         // TODO: handled by network manager
-        game.setupDefaultBoard();
+        //game.setupDefaultBoard();
         test(game);
 
     }
@@ -25,7 +26,6 @@ public class Development {
     // TODO: Migrate method to Game
     private void test(Game game){
         Piece[] testGame = {
-                /*
                 // WHITE:
                 // Figures =====================================
                 new Rook(2, 3, ChessColor.WHITE),		// left Rook
@@ -55,20 +55,25 @@ public class Development {
                 new Pawn(1, 6, ChessColor.BLACK),		// 2 Pawn
                 new Pawn(2, 6, ChessColor.BLACK),		// 3 Pawn
                 new Pawn(3, 6, ChessColor.BLACK),		// 4 Pawn
-
-                */
                 new Pawn(0, 1, ChessColor.WHITE),		// 4 Pawn
                 new Pawn(1, 2, ChessColor.BLACK),		// 4 Pawn
                 new Pawn(0, 3, ChessColor.BLACK),		// 4 Pawn
         };
+        // LOGGER TEST
         game.setupBoard(testGame);
-        Position[] positions = game.getBoard().getPiece(0, 1).getValidPositions();
-        for(Position position : positions){
-            System.out.println("Pos Y: "+position.getY()+"| Pos X: "+position.getX());
-        }
-        System.out.println();
+        Piece a = game.getBoard().getPiece(0, 7);
+        Piece b = game.getBoard().getPiece(6, 0);
+        Piece c = game.getBoard().getPiece(7, 1);
+        Piece d = game.getBoard().getPiece(3, 7);
         game.consoleBoard();
-
+        game.getBoard().movePiece(a, 0, 2);
+        game.consoleBoard();
+        game.getBoard().movePiece(b, 6, 5);
+        game.consoleBoard();
+        game.getBoard().movePiece(c, 7, 2);
+        game.consoleBoard();
+        game.getBoard().movePiece(d, 1, 7);
+        game.consoleBoard();
     }
 
     public static void main(String[] args){

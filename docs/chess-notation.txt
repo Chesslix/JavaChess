@@ -1,0 +1,35 @@
+Index (i):
+Move
+
+Piece Prefix (pp):
+K -> King
+Q -> Queen
+R -> Rook
+B -> Bishop
+N -> Knight
+[kill ? X-Axe : ] -> Pawn
+
+Move (m):
+X-Axe -> a, b, c, d, e, f, g, h
+Y-Axe -> 1, 2, 3, 4, 5, 6, 7, 8
+
+Kill (k):
+x
+
+Castling (c):
+Kingside: 0-0
+Queenside: 0-0-0
+
+Check/Mate (h):
++
+
+End of game (o):
+White win: 1-0
+Black win: 0-1
+Remis: 1/2-1/2
+
+
+
+Synopsis:
+
+i. [pp[k]m, c][h]
