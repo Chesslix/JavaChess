@@ -1,10 +1,8 @@
 package com.github.ojanka.javachess.gui.screens;
 
-public abstract class Screen {
+import processing.core.PApplet;
 
-	/**
-	 * Is called every time the screen is set in the UIManager
-	 */
+public abstract class Screen {
 	public abstract void init();
 	
 	public abstract void draw();
