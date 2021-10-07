@@ -20,7 +20,7 @@ public class GUIManager {
 			this.applet = new PApplet() {
 				public void settings() {
 					noSmooth();
-					size(500, 500);
+					size(512, 512);
 				}
 				
 				@Override

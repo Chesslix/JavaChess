@@ -9,6 +9,7 @@ import processing.core.PImage;
 public class GameScreen extends Screen {
 	private PApplet p = GUIManager.getInstance().getApplet();
 	private PImage img;
+	private boolean isClicked = false;;
 	public Position selectedField;
 
 	@Override
@@ -19,17 +20,19 @@ public class GameScreen extends Screen {
 	@Override
 	public void draw() {
 		if(p.mousePressed) {
-			//System.out.println(returnField(p.mouseX) + " "+ returnField(p.mouseY));
-			selectedField = new Position(returnField(p.mouseX), returnField(p.mouseY));
-			System.out.println(selectedField.getX() + " "+ selectedField.getY());
-		}
+			if(isClicked == false) {
+				//action when field gets clicked
+				selectedField = new Position(returnField(p.mouseX), returnField(p.mouseY));
+				System.out.println(selectedField.getX() + " "+ selectedField.getY());
+				isClicked = true;
+			}
+		} else isClicked = false;
 		
 		if(p.keyPressed) {
-			if(p.keyCode == 27) {
+			if(p.key == 27) {
 				p.key = 0;
 				System.out.println("test");
 			}
-			
 		}
 		
 		p.image(img, 0,0, 500, 500);
@@ -43,10 +46,9 @@ public class GameScreen extends Screen {
 	}
 	
 	private int returnField(int pixelposition) {
-		int currentpixel = pixelposition;
 		int counter = 0;
-		while(currentpixel - 62 > 0) {
-			currentpixel = currentpixel - 62;
+		while(pixelposition - 64 >= 0) {
+			pixelposition = pixelposition - 64;
 			counter ++;
 		}
 		
