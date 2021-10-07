@@ -1,5 +1,6 @@
 package com.github.ojanka.javachess.gui;
 
+import com.github.ojanka.javachess.gui.screens.GameScreen;
 import com.github.ojanka.javachess.gui.screens.MainMenu;
 import com.github.ojanka.javachess.gui.screens.Screen;
 
@@ -18,8 +19,9 @@ public class GUIManager {
 			this.running = true;
 			this.applet = new PApplet() {
 				public void settings() {
-					size(950, 900);
-				};
+					noSmooth();
+					size(500, 500);
+				}
 				
 				@Override
 				public void setup() {
@@ -29,10 +31,10 @@ public class GUIManager {
 				
 				public void draw() {
 					if (getScreen() == null) {
-						changeScreen(new MainMenu());
+						changeScreen(new GameScreen());
 					}
 					getScreen().draw();
-				};
+				}
 			};
 			PApplet.runSketch(new String[] {"JavaChess"}, applet);
 		}

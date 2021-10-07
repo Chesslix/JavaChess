@@ -25,7 +25,6 @@ public class MainMenu extends Screen {
 	@Override
 	public void draw() {
 		p.background(255, 255, 255);
-		p.ellipse(0, 0, 0, 0);
 		hostGame.draw();
 	}
 
