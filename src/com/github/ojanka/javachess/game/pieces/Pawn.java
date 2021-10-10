@@ -21,7 +21,7 @@ public class Pawn extends Piece {
 		long bitboardEnemies = Game.getInstance().getBoard().getAsBitmapByColor(ChessColor.getOpposite(this.getColor()));
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
 
-		long possibleMovesLookUp = pawnMovesLookUp(cPos);
+		long possibleMovesLookUp = getPawnMoveLookUp(cPos);
 		int[] possibleMoves = {9,7};
 		ArrayList<Position> validPositions = new ArrayList<>();
 		for(int move : possibleMoves){
@@ -43,8 +43,13 @@ public class Pawn extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	// gets all possible moves including two step start
-	private long pawnMovesLookUp(long pawnPos){
+	// It looked ugly using a conditional in getValidPositions
+	private long getPawnMoveLookUp(long pawnPos){
+		return this.getColor() == ChessColor.WHITE ? whitePawnMovesLookUp(pawnPos) : blackPawnMovesLookUp(pawnPos);
+	}
+
+	// gets all possible moves including two step start for white
+	private long whitePawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;
 		long l1 = (bitboardPawn >> 1) & 0x7f7f7f7f7f7f7f7fL;
 		long r1 = (bitboardPawn << 1) & 0xfefefefefefefefeL;
@@ -52,9 +57,18 @@ public class Pawn extends Piece {
 		return (h1<<8) | (bitboardPawn << 8) | (bitboardPawn << 16);
 	}
 
-	/* Why? Nino why?
-	public boolean isStart(){
-		return this.start;
+	// gets all possible moves including two step start for black
+	private long blackPawnMovesLookUp(long pawnPos){
+		long bitboardPawn = 1L << pawnPos;
+		long l1 = (bitboardPawn >> 1) & 0x7f7f7f7f7f7f7f7fL;
+		long r1 = (bitboardPawn << 1) & 0xfefefefefefefefeL;
+		long h1 = l1 | r1;
+		return (h1>>8) | (bitboardPawn >> 8) | (bitboardPawn >> 16);
 	}
-	 */
+
+	// to disable 2 field moves after first move, get it David? though implementation can be discussed ;)
+	public boolean setStartToFalse(){
+		return this.start = false;
+	}
+
 }
