@@ -37,6 +37,7 @@ public class King extends Piece {
 
 	// TODO: Implement Checkmate checker
 	public boolean isCheckmate(){
+
 		return false;
 	}
 

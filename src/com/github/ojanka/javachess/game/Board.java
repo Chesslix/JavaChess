@@ -112,4 +112,20 @@ public class Board {
         }
         return bitmap;
     }
+
+    // OMG what a funking bad and very long code I just wrote
+    public long getAllPossibleMovesBoard(ChessColor pieceColor){
+        long bitmap = 0L;
+        for (Piece piece : this.pieces) {
+            if (piece.getColor() == pieceColor){
+                Position[] piecePositions = piece.getValidPositions();
+                for (Position pos : piecePositions){
+                    int x = pos.getX();
+                    int y = pos.getY();
+                    bitmap |= 1L << (x + 8 * y);
+                }
+            }
+        }
+        return bitmap;
+    }
 }

@@ -59,21 +59,11 @@ public class Development {
                 new Pawn(1, 2, ChessColor.BLACK),		// 4 Pawn
                 new Pawn(0, 3, ChessColor.BLACK),		// 4 Pawn
         };
-        // LOGGER TEST
-        game.setupBoard(testGame);
-        Piece a = game.getBoard().getPiece(0, 7);
-        Piece b = game.getBoard().getPiece(6, 0);
-        Piece c = game.getBoard().getPiece(7, 1);
-        Piece d = game.getBoard().getPiece(3, 7);
-        game.consoleBoard();
-        game.getBoard().movePiece(a, 0, 2);
-        game.consoleBoard();
-        game.getBoard().movePiece(b, 6, 5);
-        game.consoleBoard();
-        game.getBoard().movePiece(c, 7, 2);
-        game.consoleBoard();
-        game.getBoard().movePiece(d, 1, 7);
-        game.consoleBoard();
+        // CHECKMATE TEST
+        game.setupDefaultBoard();
+        long test = 0L;
+        test += game.getBoard().getAllPossibleMovesBoard(ChessColor.BLACK);
+
     }
 
     public static void main(String[] args){
