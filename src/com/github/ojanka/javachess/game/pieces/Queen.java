@@ -29,16 +29,16 @@ public class Queen extends Piece {
 				}
 				// check if enemy
 				if (((bitboardEnemies >> nPos) & 1) == 1) {
-					validPositions.add(new Position(nPos % 8, nPos >> 3));
+					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
 				// check if on boarder
 				if ((nPos + 1) % 8 == 0 || nPos % 8 == 0) {
-					validPositions.add(new Position(nPos % 8, nPos >> 3));
+					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
 				// add to valid positions
-				validPositions.add(new Position(nPos % 8, nPos >> 3));
+				validPositions.add(new Position(nPos % 8, nPos >>> 3));
 			}
 		}
 		return validPositions.toArray(Position[]::new);

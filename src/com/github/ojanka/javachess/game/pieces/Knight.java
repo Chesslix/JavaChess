@@ -33,7 +33,7 @@ public class Knight extends Piece {
 			// check if ally on position, if not means either empty or enemy
 			if(((bitboard >> nPos) & 1) == 1) continue;
 			// set new position, nPos >> 3 is the same as nPos / 8
-			validPositions.add(new Position(nPos % 8, nPos >> 3));
+			validPositions.add(new Position(nPos % 8, nPos >>> 3));
 		}
 
 		return validPositions.toArray(Position[]::new);
@@ -42,12 +42,12 @@ public class Knight extends Piece {
 	private long knightMovesLookUp(long knightPos){
 			// super complex hardcore bithacks! :)
 			long bitboardKnight = 1L << knightPos;
-			long l1 = (bitboardKnight >> 1) & 0x7f7f7f7f7f7f7f7fL;
-			long l2 = (bitboardKnight >> 2) & 0x3f3f3f3f3f3f3f3fL;
+			long l1 = (bitboardKnight >>> 1) & 0x7f7f7f7f7f7f7f7fL;
+			long l2 = (bitboardKnight >>> 2) & 0x3f3f3f3f3f3f3f3fL;
 			long r1 = (bitboardKnight << 1) & 0xfefefefefefefefeL;
 			long r2 = (bitboardKnight << 2) & 0xfcfcfcfcfcfcfcfcL;
 			long h1 = l1 | r1;
 			long h2 = l2 | r2;
-			return (h1<<16) | (h1>>16) | (h2<<8) | (h2>>8);
+			return (h1<<16) | (h1>>>16) | (h2<<8) | (h2>>>8);
 	}
 }
