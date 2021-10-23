@@ -28,16 +28,16 @@ public class Rook extends Piece {
 				if(((bitboardAllies >> nPos) & 1) == 1){break;}
 				// check if enemy on board  -> break
 				if(((bitboardEnemies >> nPos) & 1) == 1){
-					validPositions.add(new Position(nPos % 8, nPos >> 3));
+					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
 				// check if on border of field
 				if(nPos % 8 == 0 || (nPos+1) % 8 == 0){
-					validPositions.add(new Position(nPos % 8, nPos >> 3));
+					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
 				// -> add to validPositions
-				validPositions.add(new Position(nPos % 8, nPos >> 3));
+				validPositions.add(new Position(nPos % 8, nPos >>> 3));
 			}
 		}
 		return validPositions.toArray(Position[]::new);
