@@ -25,7 +25,7 @@ public class King extends Piece {
 			int nPos = cPos + move;
 			if(((possibleMovesLookUp >> nPos) & 1) != 1) continue;
 			if(((bitboard >> nPos) & 1) == 1) continue;
-			validPositions.add(new Position(nPos & 7, nPos >> 3));
+			validPositions.add(new Position(nPos & 7, nPos >>> 3));
 		}
 		return validPositions.toArray(Position[]::new);
 	}
@@ -48,10 +48,10 @@ public class King extends Piece {
 	private long kingMovesLookUp(long kingPos){
 		// super complex hardcore bithacks! :)
 		long bitboardKing = 1L << kingPos;
-		long l1 = (bitboardKing >> 1) & 0x7f7f7f7f7f7f7f7fL;
+		long l1 = (bitboardKing >>> 1) & 0x7f7f7f7f7f7f7f7fL;
 		long r1 = (bitboardKing << 1) & 0xfefefefefefefefeL;
 		long h1 = l1 | r1;
-		return (h1<<8) | (h1>>8) | h1 | (bitboardKing >> 8) | (bitboardKing << 8);
+		return (h1<<8) | (h1>>>8) | h1 | (bitboardKing >>> 8) | (bitboardKing << 8);
 	}
 
 }
