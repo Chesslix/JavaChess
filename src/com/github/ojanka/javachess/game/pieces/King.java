@@ -21,11 +21,35 @@ public class King extends Piece {
 		long possibleMovesLookUp = kingMovesLookUp(cPos);
 		int[] possibleMoves = {1, 7, 8, 9, -1, -7, -8, -9};
 		ArrayList<Position> validPositions = new ArrayList<>();
+		// TODO: Add king castling
 		for(int move: possibleMoves){
 			int nPos = cPos + move;
 			if(((possibleMovesLookUp >> nPos) & 1) != 1) continue;
 			if(((bitboard >> nPos) & 1) == 1) continue;
 			validPositions.add(new Position(nPos & 7, nPos >>> 3));
+		}
+		return validPositions.toArray(Position[]::new);
+	}
+
+	/**
+	 *
+	 * @return 0 = no castling possible / 1 small castling possible / 2 large castling possible / both castlings possible
+	 */
+	// TODO: Implement this beauty :) I have depressions
+	private short canCastle(){
+		return 0;
+	}
+
+	// FIXME: It is fucking 00:20 and my brain stopped working. Every time a king is selected, this function needs to be activated
+	private Position[] getNoCheckmatePositions(){
+		ArrayList<Position> validPositions = new ArrayList<>();
+		Position[] possiblePositions = this.getValidPositions();
+		long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
+		for(Position pos : possiblePositions){
+			int nPos = pos.getY() * 8 + pos.getX();
+			if(((enemyMoves >> nPos) & 1) == 1){
+				validPositions.add(pos);
+			}
 		}
 		return validPositions.toArray(Position[]::new);
 	}
@@ -38,7 +62,12 @@ public class King extends Piece {
 
 	// TODO: Implement Checkmate checker
 	public boolean isCheckmate(){
-
+		if((this.getValidPositions().length == 0) && this.isCheck()){
+			// can he castle -> yes -> castle & try again
+			// get enemies that threaten the king / can they be destroyed? -> no
+			// get positions of directions from which king is threatened. Can allie step on these positions & attacker is no knight -> no
+			// return true
+		}
 		return false;
 	}
 
