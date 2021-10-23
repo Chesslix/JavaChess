@@ -31,11 +31,18 @@ public class Rook extends Piece {
 					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
-				// check if on border of field
-				if(nPos % 8 == 0 || (nPos+1) % 8 == 0){
-					validPositions.add(new Position(nPos % 8, nPos >>> 3));
+				// check if on left border
+				if(((nPos+1) % 8 == 0) && move == -1){
+					//validPositions.add(new Position(0, nPos >>> 3));
 					break;
 				}
+
+				// check if on right border
+				if((nPos % 8 == 0) && move == 1){
+					//validPositions.add(new Position(0, nPos >>> 3));
+					break;
+				}
+
 				// -> add to validPositions
 				validPositions.add(new Position(nPos % 8, nPos >>> 3));
 			}

@@ -99,7 +99,7 @@ public class Game {
 		for(int i = board.getPlayingField().length-1; i>=0; i--) {
 			for (Piece p : board.getPlayingField()[i]) {
 				if (p != null) {
-					System.out.print("[ " + p.getClassName() + " ]");
+					System.out.print("[ " + p.getClassName().substring(0,2)+p.getColor().toString().charAt(0) + " ]");
 				} else {
 					System.out.print("[     ]");
 				}

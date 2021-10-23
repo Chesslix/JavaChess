@@ -1,10 +1,13 @@
 package com.github.ojanka.javachess.game;
 
+import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventException;
+
+import java.util.Objects;
 
 public class Board {
     /**
@@ -35,6 +38,16 @@ public class Board {
 		return null;
 		 */
 	}
+
+    public King getKing(ChessColor color){
+        for(Piece piece : this.pieces){
+            if (piece == null) continue;
+            if (piece.getColor() == color && piece.getClassName().equals("King")){
+                return (King) piece;
+            }
+        }
+        return null;
+    }
 	
 	public Piece getPieceByStartPos(int startPosX, int startPosY) {
 		for (Piece piece : pieces) {
