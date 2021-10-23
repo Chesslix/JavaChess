@@ -122,7 +122,7 @@ public class Board {
                 for (Position pos : piecePositions){
                     int x = pos.getX();
                     int y = pos.getY();
-                    bitmap |= 1L << (x + 8 * y);
+                    bitmap |= 1L << (8 * y + x);
                 }
             }
         }

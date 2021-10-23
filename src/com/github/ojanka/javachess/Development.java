@@ -40,7 +40,7 @@ public class Development {
                 new Pawn(0, 1, ChessColor.WHITE),		// 1 Pawn
                 new Pawn(1, 1, ChessColor.WHITE),		// 2 Pawn
                 new Pawn(2, 1, ChessColor.WHITE),		// 3 Pawn
-                new Pawn(3, 5, ChessColor.WHITE),		// 4 Pawn
+                new Pawn(3, 1, ChessColor.WHITE),		// 4 Pawn
                 new Pawn(4, 1, ChessColor.WHITE),		// 5 Pawn
                 new Pawn(5, 1, ChessColor.WHITE),		// 6 Pawn
                 new Pawn(6, 1, ChessColor.WHITE),		// 7 Pawn
@@ -68,10 +68,24 @@ public class Development {
         };
         // CHECKMATE TEST
         game.setupBoard(testGame);
-        long test = 0L;
-        test += game.getBoard().getAllPossibleMovesBoard(ChessColor.BLACK);
+        King king = (King) game.getBoard().getPiece(3, 0);
+        System.out.println(king.isCheck());
+        //game.consoleBoard();
 
-        game.consoleBoard();
+        /*
+        for(int y = 6; y < 8; y++){
+            for(int x = 0; x < 8; x++){
+                Piece piece = game.getBoard().getPiece(x, y);
+                Position[] vpositions = piece.getValidPositions();
+                System.out.printf("x: %d | y: %d", x, y);
+                System.out.print("\tMovable positions:\t");
+                for(Position vpos : vpositions){
+                    System.out.printf("x%d y%d ", vpos.getX(), vpos.getY());
+                }
+                System.out.println();
+            }
+        }
+         */
     }
 
     public static void main(String[] args){

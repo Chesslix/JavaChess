@@ -30,9 +30,10 @@ public class King extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	// TODO: Implement Check checker :)
 	public boolean isCheck(){
-		return false;
+		long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
+		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+		return ((enemyMoves >> cPos) & 1) == 1;
 	}
 
 	// TODO: Implement Checkmate checker

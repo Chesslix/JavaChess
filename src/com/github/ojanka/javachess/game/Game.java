@@ -4,8 +4,6 @@ import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameState;
-import com.github.ojanka.javachess.util.Position;
-import org.w3c.dom.events.Event;
 
 public class Game {
 	private static Game instance = null;
