@@ -1,15 +1,12 @@
 package com.github.ojanka.javachess;
 
-import com.github.ojanka.javachess.game.Board;
 import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.game.pieces.*;
-import com.github.ojanka.javachess.logger.EventLogger;
-import com.github.ojanka.javachess.util.ChessColor;
-import com.github.ojanka.javachess.util.Position;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
+import com.github.ojanka.javachess.gui.GUIManager;
+
+import com.github.ojanka.javachess.util.ChessColor;
 
 public class Development {
 
@@ -77,7 +74,8 @@ public class Development {
     }
 
     public static void main(String[] args){
-        Development dev = new Development();
-        dev.run();
+//        Development dev = new Development();
+//        dev.run();
+    	GUIManager.getInstance().startGUI();
     }
 }
