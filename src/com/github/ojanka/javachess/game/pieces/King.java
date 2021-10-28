@@ -41,7 +41,7 @@ public class King extends Piece {
 	}
 
 	// FIXME: It is fucking 00:20 and my brain stopped working. Every time a king is selected, this function needs to be activated
-	private Position[] getNoCheckmatePositions(){
+	private Position[] getNoCheckPositions(){
 		ArrayList<Position> validPositions = new ArrayList<>();
 		Position[] possiblePositions = this.getValidPositions();
 		long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
@@ -57,7 +57,7 @@ public class King extends Piece {
 	public boolean isCheck(){
 		long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
-		return ((enemyMoves >> cPos) & 1) == 1;
+		return (enemyMoves & cPos) > 0;
 	}
 
 	// TODO: Implement Checkmate checker

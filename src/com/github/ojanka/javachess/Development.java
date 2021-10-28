@@ -7,6 +7,7 @@ import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.gui.GUIManager;
 
 import com.github.ojanka.javachess.util.ChessColor;
+import com.github.ojanka.javachess.util.Position;
 
 public class Development {
 

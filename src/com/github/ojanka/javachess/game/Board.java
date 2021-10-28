@@ -126,7 +126,7 @@ public class Board {
         return bitmap;
     }
 
-    // OMG what a funking bad and very long code I just wrote
+    // OMG what a funking bad and very long code I just wrote ¦ - nino -> true mate
     public long getAllPossibleMovesBoard(ChessColor pieceColor){
         long bitmap = 0L;
         for (Piece piece : this.pieces) {
