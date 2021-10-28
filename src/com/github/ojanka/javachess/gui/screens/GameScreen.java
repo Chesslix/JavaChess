@@ -35,7 +35,7 @@ public class GameScreen extends Screen {
 			}
 		}
 		
-		p.image(img, 0,0, 500, 500);
+		p.image(img, 0,0, 512, 512);
 		
 	}
 
