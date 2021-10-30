@@ -31,9 +31,14 @@ public class GUIManager {
 				
 				public void draw() {
 					if (getScreen() == null) {
-						changeScreen(new GameScreen());
+						changeScreen(new MainMenu());
 					}
 					getScreen().draw();
+				}
+				
+				@Override
+				public void mouseClicked() {
+					getScreen().event("mouseClicked");
 				}
 			};
 			PApplet.runSketch(new String[] {"JavaChess"}, applet);
