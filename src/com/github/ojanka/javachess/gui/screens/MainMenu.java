@@ -12,13 +12,13 @@ public class MainMenu extends Screen {
 	
 	@Override
 	public void init() {
-		hostGame = new Button("Host Game", p.sketchWidth() / 2 - 50, 300, 100, 50) {
-			
-			@Override
-			public void onClick() {
-				
-			}
-		};
+//		hostGame = new Button("Host Game", p.sketchWidth() / 2 - 50, 300, 100, 50) {
+//			
+//			@Override
+//			public void onClick() {
+//				
+//			}
+//		};
 		
 		super.init();
 	}

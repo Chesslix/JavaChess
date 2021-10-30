@@ -1,6 +1,5 @@
 package com.github.ojanka.javachess.gui;
 
-import com.github.ojanka.javachess.gui.screens.GameScreen;
 import com.github.ojanka.javachess.gui.screens.MainMenu;
 import com.github.ojanka.javachess.gui.screens.Screen;
 
