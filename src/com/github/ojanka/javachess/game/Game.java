@@ -2,6 +2,7 @@ package com.github.ojanka.javachess.game;
 
 import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.logger.EventLogger;
+import com.github.ojanka.javachess.networking.NetworkManager;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameState;
 import com.github.ojanka.javachess.util.Position;
@@ -109,5 +110,9 @@ public class Game {
 			System.out.println("  "+i);
 		}
 		System.out.println("   0      1      2      3      4      5      6      7\n");
+	}
+	
+	public void shutDown() {
+		System.exit(0);
 	}
 }

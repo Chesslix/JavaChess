@@ -22,6 +22,12 @@ public abstract class Button extends Widget {
 		this.height = height;
 	}
 	
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 	@Override
 	public void draw() {
@@ -61,5 +67,13 @@ public abstract class Button extends Widget {
 			p.mouseY > this.y && p.mouseY < this.y+this.height) {
 			return true;
 		} else return false;
+	}
+	
+	
+	
+	@Override
+	public void dispatch() {
+		// TODO Auto-generated method stub
+		
 	}
 }
