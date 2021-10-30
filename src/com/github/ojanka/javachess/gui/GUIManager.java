@@ -39,6 +39,12 @@ public class GUIManager {
 				public void mouseClicked() {
 					getScreen().event("mouseClicked");
 				}
+				
+				@Override
+				public void keyPressed() {
+					// TODO Auto-generated method stub
+					getScreen().event("keyPressed");
+				}
 			};
 			PApplet.runSketch(new String[] {"JavaChess"}, applet);
 		}

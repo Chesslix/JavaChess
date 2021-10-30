@@ -59,12 +59,14 @@ public class TextField extends Widget {
 	
 	@Override
 	public void event(String name) {
-		if (p.keyCode == PConstants.BACKSPACE) {
-			if (sb.length() > 0) {
-				sb.setLength(sb.length() - 1);
+		if(name.equals("keyPressed")) {
+			if (p.keyCode == PConstants.BACKSPACE) {
+				if (sb.length() > 0) {
+					sb.setLength(sb.length() - 1);
+				}
+			} else if (isValidChar(p.key)) {
+				sb.append(p.key);
 			}
-		} else if (isValidChar(p.key)) {
-			sb.append(p.key);
 		}
 	}
 	
