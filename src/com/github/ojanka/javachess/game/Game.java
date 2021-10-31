@@ -37,8 +37,8 @@ public class Game {
 				new Rook(0, 0, ChessColor.WHITE),		// left Rook
 				new Knight(1, 0, ChessColor.WHITE),		// left Knight
 				new Bishop(2, 0, ChessColor.WHITE),		// left Bishop
-				new King(3, 0, ChessColor.WHITE),		// 		King
-				new Queen(4, 0, ChessColor.WHITE),		// 		Queen
+				new Queen(3, 0, ChessColor.WHITE),		// 		Queen
+				new King(4, 0, ChessColor.WHITE),		// 		King
 				new Bishop(5, 0, ChessColor.WHITE),		// right Bishop
 				new Knight(6, 0, ChessColor.WHITE),		// right Knight
 				new Rook(7, 0, ChessColor.WHITE),		// right Rook
@@ -57,8 +57,8 @@ public class Game {
 				new Rook(0, 7, ChessColor.BLACK),		// left Rook
 				new Knight(1, 7, ChessColor.BLACK),		// left Knight
 				new Bishop(2, 7, ChessColor.BLACK),		// left Bishop
-				new King(3, 7, ChessColor.BLACK),		// 		King
-				new Queen(4, 7, ChessColor.BLACK),		// 		Queen
+				new Queen(3, 7, ChessColor.BLACK),		// 		Queen
+				new King(4, 7, ChessColor.BLACK),		// 		King
 				new Bishop(5, 7, ChessColor.BLACK),		// right Bishop
 				new Knight(6, 7, ChessColor.BLACK),		// right Knight
 				new Rook(7, 7, ChessColor.BLACK),		// right Rook
@@ -109,5 +109,10 @@ public class Game {
 			System.out.println("  "+i);
 		}
 		System.out.println("   0      1      2      3      4      5      6      7\n");
+	}
+
+	public void startRound(){
+		this.board.setAlliesBitmap();
+		this.board.setEnemiesBitmap();
 	}
 }

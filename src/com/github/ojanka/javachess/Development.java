@@ -7,6 +7,7 @@ import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.gui.GUIManager;
 
 import com.github.ojanka.javachess.util.ChessColor;
+import com.github.ojanka.javachess.util.Position;
 
 public class Development {
 
@@ -57,25 +58,28 @@ public class Development {
                 new Pawn(0, 3, ChessColor.BLACK),		// 4 Pawn
         };
         // LOGGER TEST
-        game.setupBoard(testGame);
-        Piece a = game.getBoard().getPiece(0, 7);
-        Piece b = game.getBoard().getPiece(6, 0);
-        Piece c = game.getBoard().getPiece(7, 1);
-        Piece d = game.getBoard().getPiece(3, 7);
+        game.setupDefaultBoard();
+        //game.getBoard().killPiece(game.getBoard().getPiece(0,0));
+        game.getBoard().killPiece(game.getBoard().getPiece(1,7));
+        game.getBoard().killPiece(game.getBoard().getPiece(2,7));
+        game.getBoard().killPiece(game.getBoard().getPiece(3,7));
+
+        game.getBoard().killPiece(game.getBoard().getPiece(5,7));
+        game.getBoard().killPiece(game.getBoard().getPiece(6,7));
         game.consoleBoard();
-        game.getBoard().movePiece(a, 0, 2);
-        game.consoleBoard();
-        game.getBoard().movePiece(b, 6, 5);
-        game.consoleBoard();
-        game.getBoard().movePiece(c, 7, 2);
-        game.consoleBoard();
-        game.getBoard().movePiece(d, 1, 7);
-        game.consoleBoard();
+
+        game.startRound();
+
+        King king = (King) game.getBoard().getPiece(4,7);
+
+        Position[] kingPositions = king.getValidPositions();
+
+        System.out.println();
     }
 
     public static void main(String[] args){
-//        Development dev = new Development();
-//        dev.run();
-    	GUIManager.getInstance().startGUI();
+        Development dev = new Development();
+        dev.run();
+    	//GUIManager.getInstance().startGUI();
     }
 }

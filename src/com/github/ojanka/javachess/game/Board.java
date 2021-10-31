@@ -10,8 +10,26 @@ public class Board {
     /**
      * Array with all Pieces. Killed pieces are replaced with null
      */
+    private long alliesBitmap;
+    private long enemiesBitmap;
     private Piece[] pieces;
     private Piece[][] playingField;
+
+    public long getAlliesBitmap() {
+        return alliesBitmap;
+    }
+
+    public long getEnemiesBitmap() {
+        return enemiesBitmap;
+    }
+
+    public void setAlliesBitmap() {
+        this.alliesBitmap = getAsBitmapByColor(Game.getInstance().getTeam());
+    }
+
+    public void setEnemiesBitmap() {
+        this.enemiesBitmap = getAsBitmapByColor(Game.getInstance().getTeam().getOpposite());
+    }
 
     public Board(Piece[] pieces) {
         this.pieces = pieces;
@@ -51,6 +69,7 @@ public class Board {
 	public void killPiece(Piece toKill) {
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == toKill) pieces[i] = null;
+            setPlayingField();
 		}
 	}
 	
