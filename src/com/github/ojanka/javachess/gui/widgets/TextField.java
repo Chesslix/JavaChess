@@ -1,7 +1,5 @@
 package com.github.ojanka.javachess.gui.widgets;
 
-import java.util.Arrays;
-
 import com.github.ojanka.javachess.gui.GUIManager;
 
 import processing.core.PApplet;
@@ -32,7 +30,6 @@ public class TextField extends Widget {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		
 		this.validChars = validChars;
 	}
 	
