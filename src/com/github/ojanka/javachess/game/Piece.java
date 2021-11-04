@@ -34,6 +34,6 @@ public abstract class Piece {
 	}
 
 	public String getClassName(){
-		return this.getClass().getSimpleName().substring(0,2)+this.getColor().toString().charAt(0);
+		return this.getClass().getSimpleName();
 	}
 }

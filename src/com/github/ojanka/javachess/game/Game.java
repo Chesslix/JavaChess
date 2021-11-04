@@ -4,8 +4,6 @@ import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameState;
-import com.github.ojanka.javachess.util.Position;
-import org.w3c.dom.events.Event;
 
 public class Game {
 	private static Game instance = null;
@@ -101,7 +99,7 @@ public class Game {
 		for(int i = board.getPlayingField().length-1; i>=0; i--) {
 			for (Piece p : board.getPlayingField()[i]) {
 				if (p != null) {
-					System.out.print("[ " + p.getClassName() + " ]");
+					System.out.print("[ " + p.getClassName().substring(0,2)+p.getColor().toString().charAt(0) + " ]");
 				} else {
 					System.out.print("[     ]");
 				}

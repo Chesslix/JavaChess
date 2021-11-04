@@ -40,7 +40,7 @@ public class Knight extends Piece {
 	}
 
 	private long knightMovesLookUp(long knightPos){
-			// super complex hardcore bithacks! :)
+			// super complex hardcore bithacks! :) Not :)
 			long bitboardKnight = 1L << knightPos;
 			long l1 = (bitboardKnight >>> 1) & 0x7f7f7f7f7f7f7f7fL;
 			long l2 = (bitboardKnight >>> 2) & 0x3f3f3f3f3f3f3f3fL;

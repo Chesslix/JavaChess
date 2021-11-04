@@ -1,7 +1,11 @@
 package com.github.ojanka.javachess.game;
 
+import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
+import com.github.ojanka.javachess.util.Position;
+
+import java.util.Objects;
 
 public class Board {
     /**
@@ -52,6 +56,16 @@ public class Board {
 		return null;
 		 */
 	}
+
+    public King getKing(ChessColor color){
+        for(Piece piece : this.pieces){
+            if (piece == null) continue;
+            if (piece.getColor() == color && piece.getClassName().equals("King")){
+                return (King) piece;
+            }
+        }
+        return null;
+    }
 	
 	public Piece getPieceByStartPos(int startPosX, int startPosY) {
 		for (Piece piece : pieces) {
@@ -126,6 +140,22 @@ public class Board {
                 int x = piece.getCurrentPosition().getX();
                 int y = piece.getCurrentPosition().getY();
                 bitmap |= 1L << (x + 8 * y);
+            }
+        }
+        return bitmap;
+    }
+
+    // OMG what a funking bad and very long code I just wrote ¦ - nino -> true mate
+    public long getAllPossibleMovesBoard(ChessColor pieceColor){
+        long bitmap = 0L;
+        for (Piece piece : this.pieces) {
+            if (piece.getColor() == pieceColor){
+                Position[] piecePositions = piece.getValidPositions();
+                for (Position pos : piecePositions){
+                    int x = pos.getX();
+                    int y = pos.getY();
+                    bitmap |= 1L << (8 * y + x);
+                }
             }
         }
         return bitmap;

@@ -8,7 +8,6 @@ import com.github.ojanka.javachess.util.Position;
 import java.util.ArrayList;
 
 public class King extends Piece {
-
     private boolean firstTurn = true;            // used for castling
 
     public void setFirstTurn(){
@@ -62,21 +61,6 @@ public class King extends Piece {
         return validPositions.toArray(Position[]::new);
     }
 
-    // TODO: Implement Check checker :)
-    public boolean isCheck() {
-        return false;
-    }
-
-    // TODO: Implement Checkmate checker
-    public boolean isCheckmate() {
-        return false;
-    }
-
-    // TODO: Implement Draw (Player can't move any piece or King is Checkmate) checker
-    public boolean isDraw() {
-        return false;
-    }
-
     private long kingMovesLookUp(long kingPos) {
         // super complex hardcore bithacks! :)
         long bitboardKing = 1L << kingPos;
@@ -86,4 +70,19 @@ public class King extends Piece {
         return (h1 << 8) | (h1 >>> 8) | h1 | (bitboardKing >>> 8) | (bitboardKing << 8);
     }
 
+    public boolean isCheck(){
+        long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
+        int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
+        return (enemyMoves & cPos) > 0;
+    }
+
+    public boolean isDraw(){
+        // TODO: Implement
+        return false;
+    }
+
+    public boolean isCheckmate(){
+        //TODO: Implement
+        return false;
+    }
 }
