@@ -20,27 +20,17 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void draw() {
-		if(p.mousePressed) {
-			if(isClicked == false) {
-				//action when field gets clicked
-				selectedField = new Position(returnField(p.mouseX), returnField(p.mouseY));
-				System.out.println(selectedField.getX() + " "+ selectedField.getY());
-				isClicked = true;
-			}
-		} else isClicked = false;
-		
-		if(p.keyPressed) {
-			if(p.key == 27) {
-				p.key = 0;
-				System.out.println("test");
-			}
-		}
-		
-		p.image(img, 0,0, 512, 512);
-		
+		p.image(img, 0,0, p.width, p.height);
 		super.draw();
 	}
 	
+	@Override
+	public void event(String name) {
+		if (name.equals("mouseRelease")) {
+			
+		}
+		super.event(name);
+	}
 	private int returnField(int pixelposition) {
 		int counter = 0;
 		while(pixelposition - 64 >= 0) {

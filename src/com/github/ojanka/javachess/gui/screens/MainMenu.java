@@ -5,6 +5,7 @@ import com.github.ojanka.javachess.gui.GUIManager;
 import com.github.ojanka.javachess.gui.widgets.Button;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
 
 public class MainMenu extends Screen {
 
@@ -12,34 +13,31 @@ public class MainMenu extends Screen {
 
 	@Override
 	public void init() {		
-		this.addWidget("hostGameButton", new Button("Host Game", p.sketchWidth() / 2 - 90, 150, 180, 50) {
+		this.addWidget("hostGameButton", new Button("Host Game", p.sketchWidth() / 2 - 100, 300, 200, 50) {
 
 			@Override
 			public void onClick() {
 				// TODO Auto-generated method stub
-				System.out.println("clicked");
 				GUIManager.getInstance().changeScreen(new HostGameMenu());
 
 			}
 		});
 
-		this.addWidget("joinGameButton", new Button("Join Game", p.sketchWidth() / 2 - 90, 250, 180, 50) {
+		this.addWidget("joinGameButton", new Button("Join Game", p.sketchWidth() / 2 - 100, 400, 200, 50) {
 
 			@Override
 			public void onClick() {
 				// TODO Auto-generated method stub
-				System.out.println("clicked");
 				GUIManager.getInstance().changeScreen(new JoinGameMenu());
 
 			}
 		});
 		
-		this.addWidget("exitGame", new Button("Exit Game", p.sketchWidth() / 2 - 90, 350, 180, 50) {
+		this.addWidget("exitGame", new Button("Exit Game", p.sketchWidth() / 2 - 100, 500, 200, 50) {
 
 			@Override
 			public void onClick() {
-				// TODO Auto-generated method stub
-				Game.getInstance().shutDown();
+				GUIManager.getInstance().exit();
 			}
 		});
 
@@ -49,7 +47,8 @@ public class MainMenu extends Screen {
 	@Override
 	public void draw() {
 		p.background(9, 77, 195);
-		p.text("Welcome to JavaChess", p.sketchWidth() / 2, 80);
+		p.textAlign(PConstants.CENTER, PConstants.CENTER);
+		p.text("Welcome to JavaChess", p.sketchWidth() / 2, 200);
 		super.draw();
 	}
 

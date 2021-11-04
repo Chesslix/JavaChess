@@ -16,6 +16,7 @@ public class TextField extends Widget {
 	
 	private PApplet p = GUIManager.getInstance().getApplet();
 	
+	private boolean active;
 	private int x;
 	private int y;
 	private int width;
@@ -25,12 +26,13 @@ public class TextField extends Widget {
 	
 	private StringBuilder sb;
 	
-	public TextField(int x, int y, int width, int height, char... validChars) {
+	public TextField(int x, int y, int width, int height, boolean active, char... validChars) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.validChars = validChars;
+		this.active = active;
 	}
 	
 	@Override
@@ -41,7 +43,11 @@ public class TextField extends Widget {
 	@Override
 	public void draw() {
 		p.fill(p.color(0, 0, 0));
-		p.noStroke();
+		
+		if (this.active) {
+			p.stroke(p.color(255, 255, 255));
+		} else p.noStroke();
+		
 		p.rect(x, y, width, height);
 		
 		p.fill(p.color(255, 255, 255));
@@ -54,17 +60,34 @@ public class TextField extends Widget {
 		
 	}
 	
+	public boolean isHovered() {
+		if (p.mouseX > this.x && p.mouseX < this.x+this.width &&
+			p.mouseY > this.y && p.mouseY < this.y+this.height) {
+			return true;
+		} else return false;
+	}
+
 	@Override
 	public void event(String name) {
-		if(name.equals("keyPressed")) {
-			if (p.keyCode == PConstants.BACKSPACE) {
-				if (sb.length() > 0) {
-					sb.setLength(sb.length() - 1);
+		if (this.isActive()) {
+			if(name.equals("keyPressed")) {
+				if (p.keyCode == PConstants.BACKSPACE) {
+					if (sb.length() > 0) {
+						sb.setLength(sb.length() - 1);
+					}
+				} else if (isValidChar(p.key)) {
+					sb.append(p.key);
 				}
-			} else if (isValidChar(p.key)) {
-				sb.append(p.key);
 			}
 		}
+	}
+	
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 	
 	public String getText() {

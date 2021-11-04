@@ -55,7 +55,7 @@ public abstract class Button extends Widget {
 	
 	@Override
 	public void event(String name) {
-		if (name.equals("mouseClicked")) {
+		if (name.equals("mouseRelease")) {
 			if (this.isHovered()) {
 				this.onClick();
 			}

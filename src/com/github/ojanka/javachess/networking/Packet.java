@@ -52,7 +52,7 @@ public class Packet {
 		ALL_MOVE_PIECE(3),
 		ALL_FINISH_TURN(4),
 		ALL_WIN_GAME(5),
-		SB_DISCONNECT(6),
+		ALL_DISCONNECT(6),
 		UNSUPPORTED(-1);
 		
 		private int type;
@@ -82,7 +82,7 @@ public class Packet {
 			case 5:
 				return ALL_WIN_GAME;
 			case 6:
-				return SB_DISCONNECT;
+				return ALL_DISCONNECT;
 			default:
 				return UNSUPPORTED;
 			}
