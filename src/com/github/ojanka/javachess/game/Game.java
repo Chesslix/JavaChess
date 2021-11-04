@@ -113,6 +113,7 @@ public class Game {
 	
 	public void shutdown() {
 		NetworkManager.getInstance().shutdown();
+	}
 
 	public void startRound(){
 		this.board.setPlayingField();

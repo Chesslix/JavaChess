@@ -83,7 +83,7 @@ public class Development {
 
     public static void main(String[] args) {
         Development dev = new Development();
-        dev.run();
-        //GUIManager.getInstance().startGUI();
+        //dev.run();
+        GUIManager.getInstance().startGUI();
     }
 }
