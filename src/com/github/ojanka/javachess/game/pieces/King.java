@@ -35,7 +35,6 @@ public class King extends Piece {
             validPositions.add(new Position(nPos & 7, nPos >>> 3));
         }
 
-        //FIXME: DEBUG ME BIG DADDY
         long test = cPos;
         if (this.firstTurn) {
             for (Piece piece : Game.getInstance().getBoard().getPieces()) {
@@ -45,9 +44,9 @@ public class King extends Piece {
                         //cPos+2 = Queenside
                         if (piece.getId().getX() == 0) {
                             if ((14L & allPieces) == 0)
-                                validPositions.add(new Position(1, 0));
+                                validPositions.add(new Position(2, 0));
                             else if ((1008806316530991104L & allPieces) == 0)
-                                validPositions.add(new Position(1, 7));
+                                validPositions.add(new Position(2, 7));
                         }
 
                         //cPos-2 = Kingside
