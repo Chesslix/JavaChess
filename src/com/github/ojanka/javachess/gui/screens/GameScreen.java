@@ -25,8 +25,9 @@ public class GameScreen extends Screen {
 	private PImage queen_w;
 	private PImage rook_b;
 	private PImage rook_w;
-	
+
 	private Position[] validPositions;
+	private Piece selectedPiece;
 
 	@Override
 	public void init() {
@@ -50,82 +51,90 @@ public class GameScreen extends Screen {
 	public void draw() {
 		p.background(0);
 		p.image(img, 0, 0, p.width, p.height);
-		
-		if(this.validPositions != null) {
-			for(Position position : validPositions) {
-				int[] dimensions = getFieldDimensions(position.getX(), position.getY());
-				p.fill(p.color(66, 138, 245));
-				p.rect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
-				p.fill(p.color(0,0,0));
+
+		if (this.validPositions != null) {
+			
+			for (Position position : validPositions) {
+				drawPosition(position.getX(), position.getY(), 66, 138, 245);
 			}
+			drawPosition(selectedPiece.getCurrentPosition().getX(), selectedPiece.getCurrentPosition().getY(), 66, 245, 102);
 		}
-		
+
 		for (Piece piece : Game.getInstance().getBoard().getPieces()) {
-			int[] dimensions = getFieldDimensions(piece.getCurrentPosition().getX(), piece.getCurrentPosition().getY());
-			PImage imageToDraw = null;
+			if(piece != null) {
+				int[] dimensions = getFieldDimensions(piece.getCurrentPosition().getX(), piece.getCurrentPosition().getY());
+				PImage imageToDraw = null;
 
-			if (piece.getColor() == ChessColor.BLACK) {
-				switch (piece.getClass().getSimpleName()) {
-				case "Bishop": {
-					imageToDraw = bishop_b;
-					break;
-				}
-				case "King": {
-					imageToDraw = king_b;
-					break;
-				}
-				case "Knight": {
-					imageToDraw = knight_b;
-					break;
-				}
-				case "Pawn": {
-					imageToDraw = pawn_b;
-					break;
-				}
-				case "Queen": {
-					imageToDraw = queen_b;
-					break;
-				}
-				case "Rook": {
-					imageToDraw = rook_b;
-					break;
-				}
+				if (piece.getColor() == ChessColor.BLACK) {
+					switch (piece.getClass().getSimpleName()) {
+					case "Bishop": {
+						imageToDraw = bishop_b;
+						break;
+					}
+					case "King": {
+						imageToDraw = king_b;
+						break;
+					}
+					case "Knight": {
+						imageToDraw = knight_b;
+						break;
+					}
+					case "Pawn": {
+						imageToDraw = pawn_b;
+						break;
+					}
+					case "Queen": {
+						imageToDraw = queen_b;
+						break;
+					}
+					case "Rook": {
+						imageToDraw = rook_b;
+						break;
+					}
+					}
+
+				} else {
+					switch (piece.getClass().getSimpleName()) {
+					case "Bishop": {
+						imageToDraw = bishop_w;
+						break;
+					}
+					case "King": {
+						imageToDraw = king_w;
+						break;
+					}
+					case "Knight": {
+						imageToDraw = knight_w;
+						break;
+					}
+					case "Pawn": {
+						imageToDraw = pawn_w;
+						break;
+					}
+					case "Queen": {
+						imageToDraw = queen_w;
+						break;
+					}
+					case "Rook": {
+						imageToDraw = rook_w;
+						break;
+					}
+					}
 				}
 
-			} else {
-				switch (piece.getClass().getSimpleName()) {
-				case "Bishop": {
-					imageToDraw = bishop_w;
-					break;
+				if (imageToDraw != null) {
+					p.image(imageToDraw, dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
 				}
-				case "King": {
-					imageToDraw = king_w;
-					break;
-				}
-				case "Knight": {
-					imageToDraw = knight_w;
-					break;
-				}
-				case "Pawn": {
-					imageToDraw = pawn_w;
-					break;
-				}
-				case "Queen": {
-					imageToDraw = queen_w;
-					break;
-				}
-				case "Rook": {
-					imageToDraw = rook_w;
-					break;
-				}
-				}
-			}
-
-			if (imageToDraw != null) {
-				p.image(imageToDraw, dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
 			}
 		}
 		super.draw();
+	}
+
+	public void drawPosition(int x, int y, int r, int g, int b) {
+		int[] dimensions = getFieldDimensions(x, y);
+		p.fill(p.color(r, g, b));
+		p.rect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
+		p.fill(p.color(0, 0, 0));
 	}
 
 	public int[] getFieldDimensions(int x, int y) {
@@ -141,12 +150,32 @@ public class GameScreen extends Screen {
 	public void event(String name) {
 		if (name.equals("mouseRelease")) {
 			System.out.println(returnField(p.mouseX) + " " + returnField(p.mouseY));
-			Piece selectedPiece = Game.getInstance().getBoard().getPiece(returnField(p.mouseX), returnField(p.mouseY));
-			if(selectedPiece != null) {
+			int x = returnField(p.mouseX);
+			int y = returnField(p.mouseY); 
+			
+			Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
+			if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
 				this.validPositions = selectedPiece.getValidPositions();
+				this.selectedPiece = selectedPiece;
+			} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
+				Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
+				this.selectedPiece = null;
+				this.validPositions = null;
+			} else {
+				this.selectedPiece = null;
+				this.validPositions = null;
 			}
 		}
 		super.event(name);
+	}
+	
+	private boolean arrayContains(Position[] arr, Position pos) {
+		for(Position p : arr) {
+			if (pos.getX() == p.getX() && pos.getY() == p.getY()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int returnField(int pixelposition) {

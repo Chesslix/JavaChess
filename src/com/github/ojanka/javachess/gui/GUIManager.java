@@ -4,6 +4,7 @@ import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.gui.screens.GameScreen;
 import com.github.ojanka.javachess.gui.screens.MainMenu;
 import com.github.ojanka.javachess.gui.screens.Screen;
+import com.github.ojanka.javachess.util.ChessColor;
 
 import processing.core.PApplet;
 
@@ -64,6 +65,7 @@ public class GUIManager {
 			PApplet.runSketch(new String[] {"JavaChess"}, applet);
 			//DEBUG
 			Game.getInstance().setupDefaultBoard();
+			Game.getInstance().setTeam(ChessColor.BLACK);
 			this.changeScreen(new GameScreen());
 		}
 	}
