@@ -70,6 +70,19 @@ public class King extends Piece {
         return (h1 << 8) | (h1 >>> 8) | h1 | (bitboardKing >>> 8) | (bitboardKing << 8);
     }
 
+    private Position[] getNoCheckPositions(){
+        ArrayList<Position> validPositions = new ArrayList<>();
+        Position[] possiblePositions = this.getValidPositions();
+        long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
+        for(Position pos : possiblePositions){
+            int nPos = pos.getY() * 8 + pos.getX();
+            if(((enemyMoves >> nPos) & 1) == 0){
+                validPositions.add(pos);
+            }
+        }
+        return validPositions.toArray(Position[]::new);
+    }
+
     public boolean isCheck(){
         long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
         int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
@@ -77,8 +90,7 @@ public class King extends Piece {
     }
 
     public boolean isDraw(){
-        // TODO: Implement
-        return false;
+        return this.getNoCheckPositions().length != 0 && !isCheck();
     }
 
     public boolean isCheckmate(){
