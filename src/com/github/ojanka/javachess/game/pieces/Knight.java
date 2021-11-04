@@ -17,7 +17,7 @@ public class Knight extends Piece {
 	@Override
 	public Position[] getValidPositions() {
 		// get bitboard allies marked as 1
-		long bitboard = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
+		long bitboard = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
 		// get current position and translate to fit to 1 dimensional array
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
 		// bitmap of all possible moves!
@@ -33,7 +33,7 @@ public class Knight extends Piece {
 			// check if ally on position, if not means either empty or enemy
 			if(((bitboard >> nPos) & 1) == 1) continue;
 			// set new position, nPos >> 3 is the same as nPos / 8
-			validPositions.add(new Position(nPos % 8, nPos >>> 3));
+			validPositions.add(new Position(nPos & 7, nPos >>> 3));
 		}
 
 		return validPositions.toArray(Position[]::new);
