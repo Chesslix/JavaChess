@@ -114,8 +114,8 @@ public class Game {
 		this.board.setWhiteBitmap();
 		this.board.setBlackBitmap();
 
-		//check if check
 		//check if checkmate
 		//check if draw
+		//check if check
 	}
 }
