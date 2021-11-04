@@ -66,14 +66,19 @@ public class Development {
 
         game.getBoard().killPiece(game.getBoard().getPiece(5, 7));
         game.getBoard().killPiece(game.getBoard().getPiece(6, 7));
-        game.consoleBoard();
+
+        game.getBoard().movePiece(game.getBoard().getPiece(3, 0), 2, 7);
 
         game.startRound();
 
-        Position[] king = game.getBoard().getPiece(4, 7).getValidPositions();
-        Position[] king2 = game.getBoard().getPiece(4, 0).getValidPositions();
+        game.consoleBoard();
 
-        System.out.println();
+        King king = (King) game.getBoard().getPiece(4, 7);
+        King king2 = (King) game.getBoard().getPiece(4, 0);
+
+        System.out.println(king.isCheck());
+
+        System.out.println(king2.isCheck());
     }
 
     public static void main(String[] args) {

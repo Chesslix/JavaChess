@@ -105,8 +105,7 @@ public class Board {
 		}
 		 */
         toMove.setCurrentPosition(x, y);
-        setPlayingField();
-        EventLogger.getInstance().log(toMove);
+        //EventLogger.getInstance().log(toMove); //FIXME: Eventlogger
     }
 
     /**
@@ -149,12 +148,14 @@ public class Board {
     public long getAllPossibleMovesBoard(ChessColor pieceColor){
         long bitmap = 0L;
         for (Piece piece : this.pieces) {
-            if (piece.getColor() == pieceColor){
-                Position[] piecePositions = piece.getValidPositions();
-                for (Position pos : piecePositions){
-                    int x = pos.getX();
-                    int y = pos.getY();
-                    bitmap |= 1L << (8 * y + x);
+            if (piece != null){
+                if (piece.getColor() == pieceColor){
+                    Position[] piecePositions = piece.getValidPositions();
+                    for (Position pos : piecePositions){
+                        int x = pos.getX();
+                        int y = pos.getY();
+                        bitmap |= 1L << (8 * y + x);
+                    }
                 }
             }
         }
