@@ -14,7 +14,8 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void init() {
-		img = p.loadImage("com/github/ojanka/javachess/gui/util/statics/chessbackground.jpg"); 	
+		img = p.loadImage("com/github/ojanka/javachess/gui/util/statics/chessbackground.jpg");
+		super.init();
 	}
 
 	@Override
@@ -37,12 +38,7 @@ public class GameScreen extends Screen {
 		
 		p.image(img, 0,0, 512, 512);
 		
-	}
-
-	@Override
-	public void dispatch() {
-		// TODO Auto-generated method stub
-		
+		super.draw();
 	}
 	
 	private int returnField(int pixelposition) {

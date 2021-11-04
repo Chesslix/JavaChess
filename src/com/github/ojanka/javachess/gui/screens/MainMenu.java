@@ -20,6 +20,7 @@ public class MainMenu extends Screen {
 			}
 		};
 		
+		super.init();
 	}
 
 	@Override

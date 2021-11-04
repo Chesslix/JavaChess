@@ -16,8 +16,8 @@ public class Bishop extends Piece {
 
 	@Override
 	public Position[] getValidPositions() {
-		long bitboardAllies = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
-		long bitboardEnemies = Game.getInstance().getBoard().getAsBitmapByColor(ChessColor.getOpposite(this.getColor()));
+		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
+		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
 		int cPos = getCurrentPosition().getY() * 8 + getCurrentPosition().getX();
 		ArrayList<Position> validPositions = new ArrayList<>();
 		int[] possibleMoves = {7, 9, -7, -9};

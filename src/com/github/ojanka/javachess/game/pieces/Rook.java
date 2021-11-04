@@ -9,6 +9,16 @@ import java.util.ArrayList;
 
 public class Rook extends Piece {
 
+	private boolean firstTurn = true;			// used for castling
+
+	public void setFirstTurn(){
+		this.firstTurn = false;
+	}
+
+	public boolean isFirstTurn() {
+		return firstTurn;
+	}
+
 	public Rook(int startX, int startY, ChessColor color) {
 		super(startX, startY, color);
 		// TODO Auto-generated constructor stub
@@ -16,8 +26,8 @@ public class Rook extends Piece {
 
 	@Override
 	public Position[] getValidPositions() {
-		long bitboardAllies = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
-		long bitboardEnemies = Game.getInstance().getBoard().getAsBitmapByColor(ChessColor.getOpposite(this.getColor()));
+		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
+		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
 		int cPos = getCurrentPosition().getY() * 8 + getCurrentPosition().getX();
 		ArrayList<Position> validPositions = new ArrayList<>();
 		// relative moves
