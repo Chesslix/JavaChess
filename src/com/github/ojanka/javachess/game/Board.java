@@ -1,17 +1,38 @@
 package com.github.ojanka.javachess.game;
 
+import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventException;
+
+import java.util.Objects;
 
 public class Board {
     /**
      * Array with all Pieces. Killed pieces are replaced with null
      */
+    private long whiteBitmap;
+    private long blackBitmap;
     private Piece[] pieces;
     private Piece[][] playingField;
+
+    public long getAlliesBitmap(ChessColor color) {
+        if(color == ChessColor.WHITE) return whiteBitmap;
+        else return blackBitmap;
+    }
+
+    public long getEnemiesBitmap(ChessColor color) {
+        if(color == ChessColor.BLACK) return whiteBitmap;
+        else return blackBitmap;
+    }
+
+    public void setWhiteBitmap() {
+        this.whiteBitmap = getAsBitmapByColor(ChessColor.WHITE);
+    }
+
+    public void setBlackBitmap() {
+        this.blackBitmap = getAsBitmapByColor(ChessColor.BLACK);
+    }
 
     public Board(Piece[] pieces) {
         this.pieces = pieces;
@@ -35,6 +56,16 @@ public class Board {
 		return null;
 		 */
 	}
+
+    public King getKing(ChessColor color){
+        for(Piece piece : this.pieces){
+            if (piece == null) continue;
+            if (piece.getColor() == color && piece.getClassName().equals("King")){
+                return (King) piece;
+            }
+        }
+        return null;
+    }
 	
 	public Piece getPieceByStartPos(int startPosX, int startPosY) {
 		for (Piece piece : pieces) {
@@ -51,6 +82,7 @@ public class Board {
 	public void killPiece(Piece toKill) {
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == toKill) pieces[i] = null;
+            setPlayingField();
 		}
 	}
 	
@@ -73,8 +105,7 @@ public class Board {
 		}
 		 */
         toMove.setCurrentPosition(x, y);
-        setPlayingField();
-        EventLogger.getInstance().log(toMove);
+        //EventLogger.getInstance().log(toMove); //FIXME: Eventlogger
     }
 
     /**
@@ -108,6 +139,24 @@ public class Board {
                 int x = piece.getCurrentPosition().getX();
                 int y = piece.getCurrentPosition().getY();
                 bitmap |= 1L << (x + 8 * y);
+            }
+        }
+        return bitmap;
+    }
+
+    // OMG what a funking bad and very long code I just wrote ¦ - nino -> true mate
+    public long getAllPossibleMovesBoard(ChessColor pieceColor){
+        long bitmap = 0L;
+        for (Piece piece : this.pieces) {
+            if (piece != null){
+                if (piece.getColor() == pieceColor){
+                    Position[] piecePositions = piece.getValidPositions();
+                    for (Position pos : piecePositions){
+                        int x = pos.getX();
+                        int y = pos.getY();
+                        bitmap |= 1L << (8 * y + x);
+                    }
+                }
             }
         }
         return bitmap;

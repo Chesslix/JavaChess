@@ -21,7 +21,6 @@ public class EventLogger {
 
     private void updateLastBoard(){
         this.lastboard = Game.getInstance().getBoard().getPlayingField();
-        System.out.println("updated last board");
     }
 
     public EventLogger(){

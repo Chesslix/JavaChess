@@ -9,6 +9,16 @@ import java.util.ArrayList;
 
 public class Rook extends Piece {
 
+	private boolean firstTurn = true;			// used for castling
+
+	public void setFirstTurn(){
+		this.firstTurn = false;
+	}
+
+	public boolean isFirstTurn() {
+		return firstTurn;
+	}
+
 	public Rook(int startX, int startY, ChessColor color) {
 		super(startX, startY, color);
 		// TODO Auto-generated constructor stub
@@ -16,13 +26,14 @@ public class Rook extends Piece {
 
 	@Override
 	public Position[] getValidPositions() {
-		long bitboardAllies = Game.getInstance().getBoard().getAsBitmapByColor(this.getColor());
-		long bitboardEnemies = Game.getInstance().getBoard().getAsBitmapByColor(ChessColor.getOpposite(this.getColor()));
+		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
+		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
 		int cPos = getCurrentPosition().getY() * 8 + getCurrentPosition().getX();
 		ArrayList<Position> validPositions = new ArrayList<>();
 		// relative moves
 		int[] possibleMoves = {1, -1, 8, -8};
 		for(int move : possibleMoves){
+			// while inside the vertical scope of the board
 			for(int nPos = cPos + move; nPos>-1 && nPos<64; nPos+=move){
 				// check if ally on pos  break
 				if(((bitboardAllies >> nPos) & 1) == 1){break;}
@@ -31,11 +42,19 @@ public class Rook extends Piece {
 					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
-				// check if on border of field
-				if(nPos % 8 == 0 || (nPos+1) % 8 == 0){
-					validPositions.add(new Position(nPos % 8, nPos >>> 3));
+
+				// check if on left border
+				if(((nPos+1) % 8 == 0) && move == -1){
+					//validPositions.add(new Position(0, nPos >>> 3));
 					break;
 				}
+
+				// check if on right border
+				if((nPos % 8 == 0) && move == 1){
+					//validPositions.add(new Position(0, nPos >>> 3));
+					break;
+				}
+
 				// -> add to validPositions
 				validPositions.add(new Position(nPos % 8, nPos >>> 3));
 			}

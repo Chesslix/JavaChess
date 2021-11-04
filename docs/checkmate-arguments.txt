@@ -1,0 +1,9 @@
+1. Is the king on a field that is check? True
+
+2. Are all fields around the king in check? True
+
+3. Can the piecees that are threatenig the king be captured? False
+
+4. Can a team mate block the piece (except Knight) that are threatenig the king? False
+
+5. CHECKMATE!
