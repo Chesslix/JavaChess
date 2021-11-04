@@ -5,7 +5,7 @@ import com.github.ojanka.javachess.gui.GUIManager;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
-public abstract class Button {
+public abstract class Button extends Widget {
 	private String label;
 	private int x;
 	private int y;
@@ -22,6 +22,14 @@ public abstract class Button {
 		this.height = height;
 	}
 	
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	@Override
 	public void draw() {
 		if (this.isHovered()) {
 			p.fill(p.color(0, 0, 0));
@@ -45,10 +53,27 @@ public abstract class Button {
 	
 	public abstract void onClick();
 	
+	@Override
+	public void event(String name) {
+		if (name.equals("mouseRelease")) {
+			if (this.isHovered()) {
+				this.onClick();
+			}
+		}
+	}
+	
 	public boolean isHovered() {
 		if (p.mouseX > this.x && p.mouseX < this.x+this.width &&
 			p.mouseY > this.y && p.mouseY < this.y+this.height) {
 			return true;
 		} else return false;
+	}
+	
+	
+	
+	@Override
+	public void dispatch() {
+		// TODO Auto-generated method stub
+		
 	}
 }

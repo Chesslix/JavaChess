@@ -17,6 +17,11 @@ public class Position {
 		return y;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("Position[x=%s, y=%s]", x, y);
+	}
+	
 	public boolean equals(Position arg0) {
 		return (this.x == arg0.x && this.y == arg0.y);
 	}

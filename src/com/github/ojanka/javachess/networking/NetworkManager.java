@@ -9,6 +9,9 @@ import java.net.Socket;
 
 import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
+import com.github.ojanka.javachess.gui.GUIManager;
+import com.github.ojanka.javachess.gui.screens.GameScreen;
+import com.github.ojanka.javachess.gui.screens.StatusScreen;
 import com.github.ojanka.javachess.networking.Packet.PacketType;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameSettings;
@@ -28,8 +31,26 @@ public class NetworkManager {
 		return instance;
 	}
 	
+	public void shutdown() {
+		if (this.client != null) {
+			this.client.destruct();
+			client = null;
+		}
+		if (this.serverSocket != null) {
+			try {this.serverSocket.close();} catch (IOException e) {e.printStackTrace();}
+		}
+	}
+	
 	public void connect(String host, int port) throws Exception {
 		if (serverSocket != null || client != null) throw new RuntimeException("Close all sockets and servers first!");
+		
+		GUIManager.getInstance().changeScreen(new StatusScreen("Joining Game", new Runnable() {
+			
+			@Override
+			public void run() {
+				GUIManager.getInstance().changeScreen(new GameScreen());
+			}
+		}));
 		
 		try {
 			this.client = new Client(new Socket(host, port));
@@ -47,6 +68,14 @@ public class NetworkManager {
 		
 		serverSocket = new ServerSocket(port);
 		this.gameSettings = gameSettings;
+		
+		GUIManager.getInstance().changeScreen(new StatusScreen("Listening on port: " + serverSocket.getLocalPort(), new Runnable() {
+			
+			@Override
+			public void run() {
+				GUIManager.getInstance().changeScreen(new GameScreen());
+			}
+		}));
 		
 		/**
 		 * Listens for connection until another game connects
@@ -70,7 +99,7 @@ public class NetworkManager {
 		while(client.isOpen()) {
 			var packet = client.readPacket();
 			if (packet != null) {
-				if (packet.getType() == PacketType.SB_DISCONNECT) return false;
+				if (packet.getType() == PacketType.ALL_DISCONNECT) return false;
 				handlePacket(packet);
 			};
 		}
@@ -94,6 +123,8 @@ public class NetworkManager {
 		case SB_JOIN_GAME:
 			client.sendPacket(new Packet(PacketType.CB_SET_COLOR, "{\"color\": " + gameSettings.ownColor.getOpposite().toString() + "}"));
 			client.sendPacket(new Packet(PacketType.CB_SETUP_DEFAULT_BOARD, "{}"));
+			Game.getInstance().setupDefaultBoard();
+			GUIManager.getInstance().event("solve");
 			if (gameSettings.ownColor == ChessColor.BLACK) {
 				client.sendPacket(new Packet(PacketType.ALL_FINISH_TURN, "{}"));
 			} else {
@@ -121,6 +152,7 @@ public class NetworkManager {
 			break;
 		case CB_SETUP_DEFAULT_BOARD:
 			Game.getInstance().setupDefaultBoard();
+			GUIManager.getInstance().event("solve");
 			break;
 		default:
 			throw new RuntimeException("Unsupportet packetId sent " + packet.getType());
@@ -161,7 +193,8 @@ public class NetworkManager {
 		
 		public void sendPacket(Packet packet) {
 			try {
-				osr.write(packet.toJson() + "\n");
+				osr.write(packet.toJson() + "\r\n");
+				osr.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -1,6 +1,7 @@
 package com.github.ojanka.javachess.gui.screens;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 import com.github.ojanka.javachess.gui.widgets.Widget;
 
@@ -37,5 +38,9 @@ public abstract class Screen {
 	
 	public void addWidget(String name, Widget widget) {
 		widgetList.put(name, widget);
+	}
+	
+	public void forEachWidget(Consumer<? super Widget> action) {
+		this.widgetList.values().forEach(action);
 	}
 }
