@@ -1,6 +1,7 @@
 package com.github.ojanka.javachess.gui;
 
 import com.github.ojanka.javachess.game.Game;
+import com.github.ojanka.javachess.gui.screens.GameScreen;
 import com.github.ojanka.javachess.gui.screens.MainMenu;
 import com.github.ojanka.javachess.gui.screens.Screen;
 
@@ -61,8 +62,9 @@ public class GUIManager {
 				}
 			};
 			PApplet.runSketch(new String[] {"JavaChess"}, applet);
-			
-			this.changeScreen(new MainMenu());
+			//DEBUG
+			Game.getInstance().setupDefaultBoard();
+			this.changeScreen(new GameScreen());
 		}
 	}
 	
