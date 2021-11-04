@@ -112,7 +112,7 @@ public class Game {
 	}
 
 	public void startRound(){
-		this.board.setAlliesBitmap();
-		this.board.setEnemiesBitmap();
+		this.board.setWhiteBitmap();
+		this.board.setBlackBitmap();
 	}
 }

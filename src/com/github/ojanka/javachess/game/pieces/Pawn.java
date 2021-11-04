@@ -21,8 +21,8 @@ public class Pawn extends Piece {
 	}
 
 	private Position[] getWhiteValidPositions() {
-		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap();
-		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap();
+		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
+		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
 
 		long possibleMovesLookUp = whitePawnMovesLookUp(cPos);
@@ -48,8 +48,8 @@ public class Pawn extends Piece {
 	}
 
 	private Position[] getBlackValidPositions() {
-		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap();
-		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap();
+		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
+		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
 		int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
 
 		long possibleMovesLookUp = blackPawnMovesLookUp(cPos);

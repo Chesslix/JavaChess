@@ -2,33 +2,32 @@ package com.github.ojanka.javachess.game;
 
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
-import com.github.ojanka.javachess.util.Position;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventException;
 
 public class Board {
     /**
      * Array with all Pieces. Killed pieces are replaced with null
      */
-    private long alliesBitmap;
-    private long enemiesBitmap;
+    private long whiteBitmap;
+    private long blackBitmap;
     private Piece[] pieces;
     private Piece[][] playingField;
 
-    public long getAlliesBitmap() {
-        return alliesBitmap;
+    public long getAlliesBitmap(ChessColor color) {
+        if(color == ChessColor.WHITE) return whiteBitmap;
+        else return blackBitmap;
     }
 
-    public long getEnemiesBitmap() {
-        return enemiesBitmap;
+    public long getEnemiesBitmap(ChessColor color) {
+        if(color == ChessColor.BLACK) return whiteBitmap;
+        else return blackBitmap;
     }
 
-    public void setAlliesBitmap() {
-        this.alliesBitmap = getAsBitmapByColor(Game.getInstance().getTeam());
+    public void setWhiteBitmap() {
+        this.whiteBitmap = getAsBitmapByColor(ChessColor.WHITE);
     }
 
-    public void setEnemiesBitmap() {
-        this.enemiesBitmap = getAsBitmapByColor(Game.getInstance().getTeam().getOpposite());
+    public void setBlackBitmap() {
+        this.blackBitmap = getAsBitmapByColor(ChessColor.BLACK);
     }
 
     public Board(Piece[] pieces) {
