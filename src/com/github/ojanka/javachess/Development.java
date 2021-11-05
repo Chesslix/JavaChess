@@ -14,9 +14,8 @@ public class Development {
     private void run() {
         Game game = Game.getInstance();
         game.setTeam(ChessColor.WHITE);
-
-        // TODO: handled by network manager
-        //game.setupDefaultBoard();
+        game.setupDefaultBoard();
+        Game.getInstance().startRound();
         test(game);
 
     }
@@ -82,7 +81,7 @@ public class Development {
     }
 
     public static void main(String[] args) {
-        Development dev = new Development();
+        //Development dev = new Development();
         //dev.run();
         GUIManager.getInstance().startGUI();
     }

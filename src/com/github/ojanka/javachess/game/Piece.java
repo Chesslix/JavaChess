@@ -20,6 +20,10 @@ public abstract class Piece {
 		this.firstTurn = false;
 	}
 
+	public boolean getFirstTurn() {
+		return this.firstTurn;
+	}
+
 	public abstract Position[] getValidPositions();
 	
 	public Position getCurrentPosition() {

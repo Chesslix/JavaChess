@@ -66,6 +66,7 @@ public class GUIManager {
 			//DEBUG
 			Game.getInstance().setupDefaultBoard();
 			Game.getInstance().setTeam(ChessColor.BLACK);
+			Game.getInstance().startRound();
 			this.changeScreen(new GameScreen());
 		}
 	}
