@@ -34,14 +34,6 @@ public class Rook extends Piece {
 		for(int move : possibleMoves){
 			// while inside the vertical scope of the board
 			for(int nPos = cPos + move; nPos>-1 && nPos<64; nPos+=move){
-				// check if ally on pos  break
-				if(((bitboardAllies >> nPos) & 1) == 1){break;}
-				// check if enemy on board  -> break
-				if(((bitboardEnemies >> nPos) & 1) == 1){
-					validPositions.add(new Position(nPos % 8, nPos >>> 3));
-					break;
-				}
-
 				// check if on left border
 				if(((nPos+1) % 8 == 0) && move == -1){
 					//validPositions.add(new Position(0, nPos >>> 3));
@@ -51,6 +43,13 @@ public class Rook extends Piece {
 				// check if on right border
 				if((nPos % 8 == 0) && move == 1){
 					//validPositions.add(new Position(0, nPos >>> 3));
+					break;
+				}
+				// check if ally on pos  break
+				if(((bitboardAllies >> nPos) & 1) == 1){break;}
+				// check if enemy on board  -> break
+				if(((bitboardEnemies >> nPos) & 1) == 1){
+					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
 
