@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class Rook extends Piece {
 
-	private boolean firstTurn = true;			// used for castling
-
 	public void setFirstTurn(){
 		this.firstTurn = false;
 	}
@@ -21,6 +19,7 @@ public class Rook extends Piece {
 
 	public Rook(int startX, int startY, ChessColor color) {
 		super(startX, startY, color);
+		super.firstTurn = true;
 		// TODO Auto-generated constructor stub
 	}
 

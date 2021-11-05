@@ -8,10 +8,9 @@ import com.github.ojanka.javachess.util.Position;
 import java.util.ArrayList;
 
 public class Pawn extends Piece {
-	private boolean start = true;
-
 	public Pawn(int startX, int startY, ChessColor color) {
 		super(startX, startY, color);
+		super.firstTurn = true;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -37,7 +36,7 @@ public class Pawn extends Piece {
 
 		if((cPos + 8) < 64 && ((bitboardAllies | bitboardEnemies) >>> cPos + 8 & 1) == 0){
 			validPositions.add(new Position((cPos + 8) & 7, (cPos + 8) >>> 3));
-			if(this.start) {
+			if(this.firstTurn) {
 				if((cPos + 16) < 64 && ((bitboardAllies | bitboardEnemies) >>> cPos + 16 & 1) == 0){
 					validPositions.add(new Position((cPos + 16) & 7, (cPos + 16) >>> 3));
 				}
@@ -64,7 +63,7 @@ public class Pawn extends Piece {
 
 		if((cPos - 8) < 64 && ((bitboardAllies | bitboardEnemies) >>> cPos - 8 & 1) == 0){
 			validPositions.add(new Position((cPos - 8) & 7, (cPos - 8) >>> 3));
-			if(this.start) {
+			if(this.firstTurn) {
 				if((cPos - 16) < 64 && ((bitboardAllies | bitboardEnemies) >>> cPos - 16 & 1) == 0){
 					validPositions.add(new Position((cPos - 16) & 7, (cPos - 16) >>> 3));
 				}
@@ -74,7 +73,7 @@ public class Pawn extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	// gets all possible moves including two step start for white
+	// gets all possible moves including two step firstTurn for white
 	private long whitePawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;
 		long l1 = (bitboardPawn >>> 1) & 0x7f7f7f7f7f7f7f7fL;
@@ -83,7 +82,7 @@ public class Pawn extends Piece {
 		return (h1<<8) | (bitboardPawn << 8) | (bitboardPawn << 16);
 	}
 
-	// gets all possible moves including two step start for black
+	// gets all possible moves including two step firstTurn for black
 	private long blackPawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;
 		long l1 = (bitboardPawn >>> 1) & 0x7f7f7f7f7f7f7f7fL;
@@ -93,7 +92,7 @@ public class Pawn extends Piece {
 	}
 
 	// to disable 2 field moves after first move, get it David? though implementation can be discussed ;)
-	public boolean setStartToFalse(){
-		return this.start = false;
+	public boolean setfirstTurn(){
+		return this.firstTurn = false;
 	}
 }
