@@ -3,6 +3,8 @@ package com.github.ojanka.javachess.gui.screens;
 import com.github.ojanka.javachess.game.Game;
 import com.github.ojanka.javachess.game.Piece;
 import com.github.ojanka.javachess.game.pieces.King;
+import com.github.ojanka.javachess.game.pieces.Pawn;
+import com.github.ojanka.javachess.game.pieces.Rook;
 import com.github.ojanka.javachess.gui.GUIManager;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
@@ -159,6 +161,25 @@ public class GameScreen extends Screen {
 				this.selectedPiece = selectedPiece;
 			} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
 				Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
+				// king castling
+				if(this.selectedPiece instanceof King){
+					if(this.selectedPiece.getFirstTurn()){
+						// Kingside
+						if(x == 6) {
+							Piece rook = Game.getInstance().getBoard().getPiece(7, y);
+							Game.getInstance().getBoard().movePiece(rook, 5, y);
+							rook.setFirstTurn();
+						}
+						// Queenside
+						else if(x == 2) {
+							Piece rook = Game.getInstance().getBoard().getPiece(0, y);
+							Game.getInstance().getBoard().movePiece(rook, 3, y);
+							rook.setFirstTurn();
+						}
+					}
+				}
+				this.selectedPiece.setFirstTurn();
+				Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
 				this.selectedPiece = null;
 				this.validPositions = null;
 			} else {

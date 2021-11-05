@@ -22,16 +22,18 @@ public class Bishop extends Piece {
 		ArrayList<Position> validPositions = new ArrayList<>();
 		int[] possibleMoves = {7, 9, -7, -9};
 		for(int move : possibleMoves){
-			for(int nPos = cPos + move;nPos<64 && nPos>-1; nPos+=move){
+			for(int nPos = cPos+move;nPos<64 && nPos>-1; nPos+=move){
+				// check if on border of field
+				if((nPos+1) % 8 == 0 || nPos % 8 == 0) {
+					// check if last field x axe was more than 1 difference (only for bishop)
+					if(Math.abs((nPos % 8)-((nPos-move) % 8)) > 1){
+						break;
+					}
+				}
 				// check if ally on pos  break
 				if(((bitboardAllies >> nPos) & 1) == 1){break;}
 				// check if enemy on board  -> break
 				if(((bitboardEnemies >> nPos) & 1) == 1){
-					validPositions.add(new Position(nPos % 8, nPos >>> 3));
-					break;
-				}
-				// check if on border of field
-				if((nPos+1) % 8 == 0 || nPos % 8 == 0) {
 					validPositions.add(new Position(nPos % 8, nPos >>> 3));
 					break;
 				}
