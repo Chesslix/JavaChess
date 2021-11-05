@@ -8,14 +8,13 @@ import com.github.ojanka.javachess.util.Position;
 import java.util.ArrayList;
 
 public class King extends Piece {
-    private boolean firstTurn = true;            // used for castling
-
     public void setFirstTurn(){
         this.firstTurn = false;
     }
 
     public King(int startX, int startY, ChessColor color) {
         super(startX, startY, color);
+        super.firstTurn = true;
         // TODO Auto-generated constructor stub
     }
 

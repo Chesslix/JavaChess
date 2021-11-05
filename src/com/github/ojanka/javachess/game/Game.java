@@ -122,6 +122,6 @@ public class Game {
 
 		//check if checkmate
 		//check if draw
-		//check if check
+		//check if check -> king firstTurn set false
 	}
 }
