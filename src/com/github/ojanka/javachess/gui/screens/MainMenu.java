@@ -48,7 +48,9 @@ public class MainMenu extends Screen {
 	public void draw() {
 		p.background(9, 77, 195);
 		p.textAlign(PConstants.CENTER, PConstants.CENTER);
+		p.textSize(60);
 		p.text("Welcome to JavaChess", p.sketchWidth() / 2, 200);
+		p.textSize(15);
 		super.draw();
 	}
 

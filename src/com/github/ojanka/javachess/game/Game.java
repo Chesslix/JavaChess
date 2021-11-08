@@ -112,7 +112,9 @@ public class Game {
 	}
 	
 	public void shutdown() {
+		System.out.println("shuting down");
 		NetworkManager.getInstance().shutdown();
+	}
 
 	public void startRound(){
 		this.board.setPlayingField();
@@ -121,6 +123,6 @@ public class Game {
 
 		//check if checkmate
 		//check if draw
-		//check if check
+		//check if check -> king firstTurn set false
 	}
 }

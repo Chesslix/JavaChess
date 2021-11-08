@@ -1,6 +1,7 @@
 package com.github.ojanka.javachess.gui;
 
 import com.github.ojanka.javachess.game.Game;
+import com.github.ojanka.javachess.gui.screens.EndGameScreen;
 import com.github.ojanka.javachess.gui.screens.GameScreen;
 import com.github.ojanka.javachess.gui.screens.MainMenu;
 import com.github.ojanka.javachess.gui.screens.Screen;
@@ -66,7 +67,9 @@ public class GUIManager {
 			//DEBUG
 			Game.getInstance().setupDefaultBoard();
 			Game.getInstance().setTeam(ChessColor.BLACK);
-			this.changeScreen(new GameScreen());
+
+			Game.getInstance().startRound();
+			this.changeScreen(new MainMenu());
 		}
 	}
 	

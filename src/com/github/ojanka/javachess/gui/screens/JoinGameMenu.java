@@ -21,8 +21,8 @@ public class JoinGameMenu extends Screen {
 		// TODO Auto-generated method stub
 		this.addWidget("returnMainMenuButton", new MainMenuButton("Back to Menu", p.sketchWidth() - 120, 30, 100, 40));
 		this.addWidget("address", new TextField(p.sketchWidth() / 2 - 100, 230, 200, 40, true, ArrayUtils.concatenateCharArrays(TextField.ALL_DIGITS, new char[] {'.'})));
-		this.addWidget("port", new TextField(p.sketchWidth() / 2 - 100, 330, 200, 40, false, TextField.ALL_DIGITS));
-		this.addWidget("join", new Button("Join Game", p.sketchWidth() / 2 -50 , 450, 100, 40) {
+		this.addWidget("port", new TextField(p.sketchWidth() / 2 - 100, 360, 200, 40, false, TextField.ALL_DIGITS));
+		this.addWidget("join", new Button("Join Game", p.sketchWidth() / 2 -100 , 480, 200, 60) {
 			
 			@Override
 			public void onClick() {
@@ -61,12 +61,15 @@ public class JoinGameMenu extends Screen {
 		// TODO Auto-generated method stub
 		p.background(9, 77, 195);
 		p.textAlign(PConstants.CENTER, PConstants.CENTER);
+		p.textSize(60);
 		p.text("Join a Game!", p.sketchWidth() / 2, 100);
+		p.textSize(30);
 		p.text("Insert IP Adress", p.sketchWidth() / 2, 200);
-		p.text("Insert Port", p.sketchWidth() / 2, 300);
+		p.text("Insert Port", p.sketchWidth() / 2, 330);
+		p.textSize(15);
 		
 		p.fill(Color.RED.getRGB());
-		p.text(error, p.sketchWidth() / 2, 400);
+		p.text(error, p.sketchWidth() / 2, 380);
 		super.draw();
 	}
 	
