@@ -53,6 +53,7 @@ public class Packet {
 		ALL_FINISH_TURN(4),
 		ALL_WIN_GAME(5),
 		ALL_DISCONNECT(6),
+		ALL_LOSE_GAME(8),
 		UNSUPPORTED(-1);
 		
 		private int type;
@@ -83,6 +84,8 @@ public class Packet {
 				return ALL_WIN_GAME;
 			case 6:
 				return ALL_DISCONNECT;
+			case 8:
+				return ALL_LOSE_GAME;
 			default:
 				return UNSUPPORTED;
 			}

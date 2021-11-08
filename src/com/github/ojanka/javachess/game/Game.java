@@ -1,9 +1,14 @@
 package com.github.ojanka.javachess.game;
 
+import java.util.HashMap;
+
 import com.github.ojanka.javachess.game.pieces.*;
 import com.github.ojanka.javachess.gui.GUIManager;
+import com.github.ojanka.javachess.gui.screens.EndGameScreen;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.networking.NetworkManager;
+import com.github.ojanka.javachess.networking.Packet;
+import com.github.ojanka.javachess.networking.Packet.PacketType;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.GameState;
 
@@ -15,6 +20,8 @@ public class Game {
 	private GameState gameState;
 	public boolean myTurn;
 
+	private HashMap<ChessColor, King> kings;
+	
 	private Game(){
 	}
 	
@@ -31,6 +38,11 @@ public class Game {
 	}
 	
 	public void setupDefaultBoard() {
+		this.kings = new HashMap<>();
+		var whiteKing = new King(4, 0, ChessColor.WHITE);
+		var blackKing = new King(4, 7, ChessColor.BLACK);
+		kings.put(ChessColor.WHITE, whiteKing);
+		kings.put(ChessColor.BLACK, blackKing);
 		Piece[] pieces = {
 				// WHITE:
 				// Figures =====================================
@@ -38,7 +50,7 @@ public class Game {
 				new Knight(1, 0, ChessColor.WHITE),		// left Knight
 				new Bishop(2, 0, ChessColor.WHITE),		// left Bishop
 				new Queen(3, 0, ChessColor.WHITE),		// 		Queen
-				new King(4, 0, ChessColor.WHITE),		// 		King
+				whiteKing,								// 		King
 				new Bishop(5, 0, ChessColor.WHITE),		// right Bishop
 				new Knight(6, 0, ChessColor.WHITE),		// right Knight
 				new Rook(7, 0, ChessColor.WHITE),		// right Rook
@@ -58,7 +70,7 @@ public class Game {
 				new Knight(1, 7, ChessColor.BLACK),		// left Knight
 				new Bishop(2, 7, ChessColor.BLACK),		// left Bishop
 				new Queen(3, 7, ChessColor.BLACK),		// 		Queen
-				new King(4, 7, ChessColor.BLACK),		// 		King
+				blackKing,		// 		King
 				new Bishop(5, 7, ChessColor.BLACK),		// right Bishop
 				new Knight(6, 7, ChessColor.BLACK),		// right Knight
 				new Rook(7, 7, ChessColor.BLACK),		// right Rook
@@ -121,8 +133,40 @@ public class Game {
 		this.board.setWhiteBitmap();
 		this.board.setBlackBitmap();
 
-		//check if checkmate
+		if (kings.get(team).isCheckmate()) {
+			NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_LOSE_GAME, "{}"));
+			this.gameState = GameState.GAME_LOST;
+			endGame();
+		} else if (kings.get(team.getOpposite()).isCheckmate()) {
+			NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_WIN_GAME, "{}"));
+			this.gameState = GameState.GAME_WON;
+			endGame();
+		} else {
+			this.myTurn = true;
+		}
+		
+		if (kings.get(team).isCheck()) {
+			kings.get(team).firstTurn = false;
+		}
 		//check if draw
-		//check if check -> king firstTurn set false
+	}
+
+	public void finishTurn() {
+		myTurn = false;
+		NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_FINISH_TURN, "{}"));
+		
+	}
+
+	public void endGame() {
+		switch (this.getGameState()) {
+			case GAME_WON:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("You won the game"));
+				break;
+			case GAME_LOST:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("Sorry, you have lost the game"));
+				break;
+			case REMOTE_LEFT:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("Sorry, your opponent left the game"));
+		}
 	}
 }

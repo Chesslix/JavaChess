@@ -32,13 +32,22 @@ public class NetworkManager {
 	}
 	
 	public void shutdown() {
-		if (this.client != null) {
-			this.client.destruct();
-			client = null;
+		if (this.client != null) this.client.sendPacket(new Packet(PacketType.ALL_DISCONNECT, "{}"));
+		this.client = null;
+		this.serverSocket = null;
+		for (Thread thread : Thread.getAllStackTraces().keySet()) {
+			if (thread.getName().equals("Networking")) {
+				thread.interrupt();
+			}
 		}
-		if (this.serverSocket != null) {
-			try {this.serverSocket.close();} catch (IOException e) {e.printStackTrace();}
-		}
+		
+//		if (this.client != null) {
+//			this.client.destruct();
+//			client = null;
+//		}
+//		if (this.serverSocket != null) {
+//			try {this.serverSocket.close();} catch (IOException e) {e.printStackTrace();}
+//		}
 	}
 	
 	public void connect(String host, int port) throws Exception {
@@ -99,7 +108,12 @@ public class NetworkManager {
 		while(client.isOpen()) {
 			var packet = client.readPacket();
 			if (packet != null) {
-				if (packet.getType() == PacketType.ALL_DISCONNECT) return false;
+				if (packet.getType() == PacketType.ALL_DISCONNECT) {
+					Game.getInstance().setGameState(GameState.REMOTE_LEFT);
+					Game.getInstance().endGame();
+					this.shutdown();
+					return false;
+				};
 				handlePacket(packet);
 			};
 		}
@@ -126,9 +140,9 @@ public class NetworkManager {
 			Game.getInstance().setupDefaultBoard();
 			GUIManager.getInstance().event("solve");
 			if (gameSettings.ownColor == ChessColor.BLACK) {
-				client.sendPacket(new Packet(PacketType.ALL_FINISH_TURN, "{}"));
+				Game.getInstance().finishTurn();
 			} else {
-				Game.getInstance().myTurn = true;
+				Game.getInstance().startRound();
 			}
 			break;
 		case ALL_MOVE_PIECE:
@@ -141,11 +155,15 @@ public class NetworkManager {
 			Game.getInstance().getBoard().movePiece(piece, x, y);
 			break;
 		case ALL_FINISH_TURN:
-			Game.getInstance().myTurn = true;
+			Game.getInstance().startRound();
 			break;
 		case ALL_WIN_GAME:
 			Game.getInstance().setGameState(GameState.GAME_LOST);
+			Game.getInstance().endGame();
 			break;
+		case ALL_LOSE_GAME:
+			Game.getInstance().setGameState(GameState.GAME_WON);
+			Game.getInstance().endGame();
 		case CB_SET_COLOR:
 			ChessColor color = ChessColor.fromString((String) packet.readProperty("color"));
 			Game.getInstance().setTeam(color);
@@ -153,6 +171,11 @@ public class NetworkManager {
 		case CB_SETUP_DEFAULT_BOARD:
 			Game.getInstance().setupDefaultBoard();
 			GUIManager.getInstance().event("solve");
+			break;
+		case ALL_DISCONNECT:
+			Game.getInstance().setGameState(GameState.REMOTE_LEFT);
+			Game.getInstance().endGame();
+			this.shutdown();
 			break;
 		default:
 			throw new RuntimeException("Unsupportet packetId sent " + packet.getType());

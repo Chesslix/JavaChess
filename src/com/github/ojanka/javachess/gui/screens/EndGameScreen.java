@@ -25,7 +25,7 @@ public class EndGameScreen extends Screen{
     public void draw() {
         p.background(9, 77, 195);
         p.textAlign(PConstants.CENTER, PConstants.CENTER);
-        p.textSize(60);
+        p.textSize(50);
         p.text(textToDisplay, p.width/ 2, 300);
         p.textSize(15);
 

@@ -6,6 +6,9 @@ import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.game.pieces.Pawn;
 import com.github.ojanka.javachess.game.pieces.Rook;
 import com.github.ojanka.javachess.gui.GUIManager;
+import com.github.ojanka.javachess.networking.NetworkManager;
+import com.github.ojanka.javachess.networking.Packet;
+import com.github.ojanka.javachess.networking.Packet.PacketType;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
@@ -140,51 +143,65 @@ public class GameScreen extends Screen {
 	}
 
 	public int[] getFieldDimensions(int x, int y) {
-		int[] resultarray = new int[4];
-		resultarray[0] = p.width / 8 * x;
-		resultarray[1] = p.height / 8 * y;
-		resultarray[2] = p.width / 8;
-		resultarray[3] = p.height / 8;
-		return resultarray;
+		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
+			int[] resultarray = new int[4];
+			resultarray[0] = p.width / 8 * x;
+			resultarray[1] = p.height / 8 * y;
+			resultarray[2] = p.width / 8;
+			resultarray[3] = p.height / 8;
+			return resultarray;
+		} else {
+			int[] resultarray = new int[4];
+			resultarray[0] = p.width - (p.width / 8 * x);
+			resultarray[1] = p.height - (p.height / 8 * y);
+			resultarray[2] = - p.width / 8;
+			resultarray[3] = - p.height / 8;
+			return resultarray;
+		}
 	}
 
 	@Override
 	public void event(String name) {
 		if (name.equals("mouseRelease")) {
-			System.out.println(returnField(p.mouseX) + " " + returnField(p.mouseY));
-			int x = returnField(p.mouseX);
-			int y = returnField(p.mouseY); 
-			
-			Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
-			if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
-				this.validPositions = selectedPiece.getValidPositions();
-				this.selectedPiece = selectedPiece;
-			} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
-				Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
-				// king castling
-				if(this.selectedPiece instanceof King){
-					if(this.selectedPiece.getFirstTurn()){
-						// Kingside
-						if(x == 6) {
-							Piece rook = Game.getInstance().getBoard().getPiece(7, y);
-							Game.getInstance().getBoard().movePiece(rook, 5, y);
-							rook.setFirstTurn();
-						}
-						// Queenside
-						else if(x == 2) {
-							Piece rook = Game.getInstance().getBoard().getPiece(0, y);
-							Game.getInstance().getBoard().movePiece(rook, 3, y);
-							rook.setFirstTurn();
+			if (Game.getInstance().myTurn == true) {
+				int x = returnField(p.mouseX);
+				int y = returnField(p.mouseY); 
+				
+				Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
+				if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
+					this.validPositions = selectedPiece.getValidPositions();
+					this.selectedPiece = selectedPiece;
+				} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
+					Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
+					NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + this.selectedPiece.getId().getX() + ",\"y\":" + this.selectedPiece.getId().getY() + "},\"move\":{\"x\":" + x + ",\"y\":" + y + "}}"));
+					// king castling
+					if(this.selectedPiece instanceof King){
+						if(this.selectedPiece.getFirstTurn()){
+							// Kingside
+							if(x == 6) {
+								Piece rook = Game.getInstance().getBoard().getPiece(7, y);
+								Game.getInstance().getBoard().movePiece(rook, 5, y);
+								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 5 + ",\"y\":" + y + "}}"));
+								rook.setFirstTurn();
+							}
+							// Queenside
+							else if(x == 2) {
+								Piece rook = Game.getInstance().getBoard().getPiece(0, y);
+								Game.getInstance().getBoard().movePiece(rook, 3, y);
+								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 3 + ",\"y\":" + y + "}}"));
+								rook.setFirstTurn();
+							}
 						}
 					}
+					this.selectedPiece.setFirstTurn();
+					Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
+					this.selectedPiece = null;
+					this.validPositions = null;
+					Game.getInstance().finishTurn();
+				} else {
+					this.selectedPiece = null;
+					this.validPositions = null;
 				}
-				this.selectedPiece.setFirstTurn();
-				Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
-				this.selectedPiece = null;
-				this.validPositions = null;
-			} else {
-				this.selectedPiece = null;
-				this.validPositions = null;
 			}
 		}
 		super.event(name);
@@ -200,13 +217,23 @@ public class GameScreen extends Screen {
 	}
 
 	private int returnField(int pixelposition) {
-		int counter = 0;
-		int fieldWidth = p.width / 8;
-		while (pixelposition - fieldWidth >= 0) {
-			pixelposition = pixelposition - fieldWidth;
-			counter++;
+		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
+			int counter = 0;
+			int fieldWidth = p.width / 8;
+			while (pixelposition - fieldWidth >= 0) {
+				pixelposition = pixelposition - fieldWidth;
+				counter++;
+			}
+			return counter;
+		} else {
+			int counter = 0;
+			int fieldWidth = p.width / 8;
+			while (pixelposition - fieldWidth >= 0) {
+				pixelposition = pixelposition - fieldWidth;
+				counter++;
+			}
+			return 7 - counter;
 		}
-		return counter;
 	}
 
 }
