@@ -143,12 +143,21 @@ public class GameScreen extends Screen {
 	}
 
 	public int[] getFieldDimensions(int x, int y) {
-		int[] resultarray = new int[4];
-		resultarray[0] = p.width / 8 * x;
-		resultarray[1] = p.height / 8 * y;
-		resultarray[2] = p.width / 8;
-		resultarray[3] = p.height / 8;
-		return resultarray;
+		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
+			int[] resultarray = new int[4];
+			resultarray[0] = p.width / 8 * x;
+			resultarray[1] = p.height / 8 * y;
+			resultarray[2] = p.width / 8;
+			resultarray[3] = p.height / 8;
+			return resultarray;
+		} else {
+			int[] resultarray = new int[4];
+			resultarray[0] = p.width - (p.width / 8 * x);
+			resultarray[1] = p.height - (p.height / 8 * y);
+			resultarray[2] = - p.width / 8;
+			resultarray[3] = - p.height / 8;
+			return resultarray;
+		}
 	}
 
 	@Override
@@ -208,13 +217,23 @@ public class GameScreen extends Screen {
 	}
 
 	private int returnField(int pixelposition) {
-		int counter = 0;
-		int fieldWidth = p.width / 8;
-		while (pixelposition - fieldWidth >= 0) {
-			pixelposition = pixelposition - fieldWidth;
-			counter++;
+		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
+			int counter = 0;
+			int fieldWidth = p.width / 8;
+			while (pixelposition - fieldWidth >= 0) {
+				pixelposition = pixelposition - fieldWidth;
+				counter++;
+			}
+			return counter;
+		} else {
+			int counter = 0;
+			int fieldWidth = p.width / 8;
+			while (pixelposition - fieldWidth >= 0) {
+				pixelposition = pixelposition - fieldWidth;
+				counter++;
+			}
+			return 7 - counter;
 		}
-		return counter;
 	}
 
 }
