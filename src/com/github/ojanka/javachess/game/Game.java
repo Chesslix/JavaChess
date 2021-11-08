@@ -112,6 +112,7 @@ public class Game {
 	}
 	
 	public void shutdown() {
+		System.out.println("shuting down");
 		NetworkManager.getInstance().shutdown();
 	}
 
