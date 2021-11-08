@@ -3,7 +3,8 @@ package com.github.ojanka.javachess.util;
 public enum GameState {
 	INGAME(0),
 	GAME_WON(1),
-	GAME_LOST(2);
+	GAME_LOST(2),
+	REMOTE_LEFT(3);
 
 	private int state;
 	

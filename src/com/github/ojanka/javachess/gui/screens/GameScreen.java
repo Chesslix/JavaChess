@@ -6,6 +6,9 @@ import com.github.ojanka.javachess.game.pieces.King;
 import com.github.ojanka.javachess.game.pieces.Pawn;
 import com.github.ojanka.javachess.game.pieces.Rook;
 import com.github.ojanka.javachess.gui.GUIManager;
+import com.github.ojanka.javachess.networking.NetworkManager;
+import com.github.ojanka.javachess.networking.Packet;
+import com.github.ojanka.javachess.networking.Packet.PacketType;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
@@ -151,40 +154,45 @@ public class GameScreen extends Screen {
 	@Override
 	public void event(String name) {
 		if (name.equals("mouseRelease")) {
-			System.out.println(returnField(p.mouseX) + " " + returnField(p.mouseY));
-			int x = returnField(p.mouseX);
-			int y = returnField(p.mouseY); 
-			
-			Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
-			if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
-				this.validPositions = selectedPiece.getValidPositions();
-				this.selectedPiece = selectedPiece;
-			} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
-				Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
-				// king castling
-				if(this.selectedPiece instanceof King){
-					if(this.selectedPiece.getFirstTurn()){
-						// Kingside
-						if(x == 6) {
-							Piece rook = Game.getInstance().getBoard().getPiece(7, y);
-							Game.getInstance().getBoard().movePiece(rook, 5, y);
-							rook.setFirstTurn();
-						}
-						// Queenside
-						else if(x == 2) {
-							Piece rook = Game.getInstance().getBoard().getPiece(0, y);
-							Game.getInstance().getBoard().movePiece(rook, 3, y);
-							rook.setFirstTurn();
+			if (Game.getInstance().myTurn == true) {
+				int x = returnField(p.mouseX);
+				int y = returnField(p.mouseY); 
+				
+				Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
+				if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
+					this.validPositions = selectedPiece.getValidPositions();
+					this.selectedPiece = selectedPiece;
+				} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
+					Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
+					NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + this.selectedPiece.getId().getX() + ",\"y\":" + this.selectedPiece.getId().getY() + "},\"move\":{\"x\":" + x + ",\"y\":" + y + "}}"));
+					// king castling
+					if(this.selectedPiece instanceof King){
+						if(this.selectedPiece.getFirstTurn()){
+							// Kingside
+							if(x == 6) {
+								Piece rook = Game.getInstance().getBoard().getPiece(7, y);
+								Game.getInstance().getBoard().movePiece(rook, 5, y);
+								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 5 + ",\"y\":" + y + "}}"));
+								rook.setFirstTurn();
+							}
+							// Queenside
+							else if(x == 2) {
+								Piece rook = Game.getInstance().getBoard().getPiece(0, y);
+								Game.getInstance().getBoard().movePiece(rook, 3, y);
+								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 3 + ",\"y\":" + y + "}}"));
+								rook.setFirstTurn();
+							}
 						}
 					}
+					this.selectedPiece.setFirstTurn();
+					Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
+					this.selectedPiece = null;
+					this.validPositions = null;
+					Game.getInstance().finishTurn();
+				} else {
+					this.selectedPiece = null;
+					this.validPositions = null;
 				}
-				this.selectedPiece.setFirstTurn();
-				Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
-				this.selectedPiece = null;
-				this.validPositions = null;
-			} else {
-				this.selectedPiece = null;
-				this.validPositions = null;
 			}
 		}
 		super.event(name);
