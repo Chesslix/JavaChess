@@ -79,10 +79,4 @@ public class Development {
 
         System.out.println(king2.isCheck());
     }
-
-    public static void main(String[] args) {
-        //Development dev = new Development();
-        //dev.run();
-        GUIManager.getInstance().startGUI();
-    }
 }
