@@ -3,6 +3,8 @@ package com.github.ojanka.javachess.game;
 import java.util.HashMap;
 
 import com.github.ojanka.javachess.game.pieces.*;
+import com.github.ojanka.javachess.gui.GUIManager;
+import com.github.ojanka.javachess.gui.screens.EndGameScreen;
 import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.networking.NetworkManager;
 import com.github.ojanka.javachess.networking.Packet;
@@ -156,6 +158,15 @@ public class Game {
 	}
 
 	public void endGame() {
-		
+		switch (this.getGameState()) {
+			case GAME_WON:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("You won the game"));
+				break;
+			case GAME_LOST:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("Sorry, you have lost the game"));
+				break;
+			case REMOTE_LEFT:
+				GUIManager.getInstance().changeScreen(new EndGameScreen("Sorry, your opponent left the game"));
+		}
 	}
 }
