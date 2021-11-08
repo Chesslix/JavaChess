@@ -172,6 +172,11 @@ public class NetworkManager {
 			Game.getInstance().setupDefaultBoard();
 			GUIManager.getInstance().event("solve");
 			break;
+		case ALL_DISCONNECT:
+			Game.getInstance().setGameState(GameState.REMOTE_LEFT);
+			Game.getInstance().endGame();
+			this.shutdown();
+			break;
 		default:
 			throw new RuntimeException("Unsupportet packetId sent " + packet.getType());
 		}
