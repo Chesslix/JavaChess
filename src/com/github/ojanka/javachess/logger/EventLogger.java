@@ -21,12 +21,14 @@ public class EventLogger {
     private int index = 1;
     private Piece[][] lastboard;
 
+    /*
     private void updateLastBoard(){
         this.lastboard = Arrays.stream(Game.getInstance().getBoard().getPlayingField()).map(Piece[]::clone).toArray(Piece[][]::new);
     }
+     */
 
     public EventLogger(){
-        updateLastBoard();
+        //updateLastBoard();
     }
 
     public static EventLogger getInstance(){
@@ -152,7 +154,7 @@ public class EventLogger {
         fileOutput(log);
 
         // Update attributes
-        updateLastBoard();
+        //updateLastBoard();
         this.index++;
     }
 
