@@ -10,8 +10,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class EventLogger {
     private static EventLogger instance = null;
@@ -20,7 +22,7 @@ public class EventLogger {
     private Piece[][] lastboard;
 
     private void updateLastBoard(){
-        this.lastboard = Game.getInstance().getBoard().getPlayingField();
+        this.lastboard = Arrays.stream(Game.getInstance().getBoard().getPlayingField()).map(Piece[]::clone).toArray(Piece[][]::new);
     }
 
     public EventLogger(){
@@ -68,9 +70,11 @@ public class EventLogger {
         return fileContent.toString();
     }
 
-    public void log(Piece p){
+    public void log(Piece p, Position oldPos){
         // Vars
+        System.out.println(p.getCurrentPosition().getY()+" "+oldPos.getY());
         Position movedTo = p.getCurrentPosition();
+        /*
         Position originalPos = null;
         for(int y = 0; y < this.lastboard.length; y++){
             for(int x = 0; x < this.lastboard[y].length; x++){
@@ -80,6 +84,7 @@ public class EventLogger {
                 }
             }
         }
+        */
         // need old position
         String pieceClass = p.getClass().getSimpleName();
 
@@ -87,7 +92,7 @@ public class EventLogger {
         String kill = "";
         if(this.lastboard[movedTo.getY()][movedTo.getX()] != null){
             if(pieceClass.equals("Pawn")){
-                kill = ""; // last X-Position
+                kill = translatePositionXToNotation(oldPos);
             }
             kill += "x";
         }
@@ -115,8 +120,8 @@ public class EventLogger {
         // Build final log
         String log = "";
         // King castling case.
-        assert originalPos != null;     // Always the case ... (IntelliJ is stupid sry)
-        if(pieceClass.equals("King") && Math.abs(movedTo.getX()-originalPos.getX()) > 1){
+        assert oldPos != null;     // Always the case ... (IntelliJ is stupid sry)
+        if(pieceClass.equals("King") && Math.abs(movedTo.getX()-oldPos.getX()) > 1){
             if(movedTo.getX() == 5){ log += this.index+". 0-0-0"; }            // King side castling
             else if (movedTo.getX() == 1){ log += this.index+". 0-0"; }    // Queen side castling
         }

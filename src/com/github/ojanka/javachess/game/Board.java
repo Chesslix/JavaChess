@@ -5,6 +5,7 @@ import com.github.ojanka.javachess.logger.EventLogger;
 import com.github.ojanka.javachess.util.ChessColor;
 import com.github.ojanka.javachess.util.Position;
 
+import javax.xml.validation.TypeInfoProvider;
 import java.util.Objects;
 
 public class Board {
@@ -104,8 +105,9 @@ public class Board {
 			}
 		}
 		 */
+        Position oldPos = new Position(toMove.getCurrentPosition().getX(), toMove.getCurrentPosition().getY());
         toMove.setCurrentPosition(x, y);
-        EventLogger.getInstance().log(toMove);
+        EventLogger.getInstance().log(toMove, oldPos);
     }
 
     /**
