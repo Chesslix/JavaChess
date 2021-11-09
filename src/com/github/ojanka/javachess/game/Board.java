@@ -61,7 +61,7 @@ public class Board {
     public King getKing(ChessColor color){
         for(Piece piece : this.pieces){
             if (piece == null) continue;
-            if (piece.getColor() == color && piece.getClassName().equals("King")){
+            if (piece.getColor() == color && piece instanceof King){
                 return (King) piece;
             }
         }

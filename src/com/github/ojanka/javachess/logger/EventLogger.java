@@ -107,15 +107,9 @@ public class EventLogger {
 
         // Get specials
         String specials = "";
-        King enemyKing = null;
         // Get enemy king
-        for(Piece piece : Game.getInstance().getBoard().getPieces()){
-            if(piece.getClass().getSimpleName().equals("King") && piece.getColor() == ChessColor.getOpposite(p.getColor())){
-                enemyKing = (King) piece; // DO NOT TRY AT HOME
-                break;
-            }
-        }
-        assert enemyKing != null;
+        King enemyKing = Game.getInstance().getBoard().getKing(ChessColor.getOpposite(p.getColor()));
+
         if(enemyKing.isCheck()){ specials = "+"; }                 // Other Team's king is Check
         else if (enemyKing.isCheckmate()){ specials = "#"; }       // Other Team's king is Checkmate
 
