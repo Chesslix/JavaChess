@@ -36,7 +36,7 @@ public class GameScreen extends Screen {
 
 	@Override
 	public void init() {
-		img = p.loadImage("com/github/ojanka/javachess/gui/util/statics/chessbackground.jpg");
+		img = p.loadImage("./assets/textures/chess.png");
 		bishop_b = p.loadImage("./assets/textures/pieces/bishop_b.png");
 		bishop_w = p.loadImage("./assets/textures/pieces/bishop_w.png");
 		king_b = p.loadImage("./assets/textures/pieces/king_b.png");
