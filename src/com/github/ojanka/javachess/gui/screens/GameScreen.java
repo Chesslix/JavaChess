@@ -145,7 +145,7 @@ public class GameScreen extends Screen {
 	public int[] getFieldDimensions(int x, int y) {
 		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
 			int[] resultarray = new int[4];
-			resultarray[0] = p.width - (p.width / 8 * x);
+			resultarray[0] = p.width - (p.width / 8 * (x+1));
 			//resultarray[0] = p.width / 8 * x;
 			resultarray[1] = p.height / 8 * y;
 			resultarray[2] = p.width / 8;
@@ -240,6 +240,7 @@ public class GameScreen extends Screen {
 	}
 
 	private int returnFieldX(int pixelposition){
+		if(Game.getInstance().getTeam() == ChessColor.BLACK) return returnFieldY(pixelposition);
 		return 7 - returnFieldY(pixelposition);
 	}
 
