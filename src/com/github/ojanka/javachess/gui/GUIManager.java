@@ -56,7 +56,7 @@ public class GUIManager {
 				
 				@Override
 				public void exit() {
-					System.out.println("exiting...");
+					System.out.println("test");
 					running = false;
 					changeScreen(null);
 					Game.getInstance().shutdown();
