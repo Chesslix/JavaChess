@@ -240,7 +240,7 @@ public class GameScreen extends Screen {
 	}
 
 	private int returnFieldX(int pixelposition){
-		if(Game.getInstance().getTeam() == ChessColor.BLACK) return returnFieldY(pixelposition);
+		//if(Game.getInstance().getTeam() == ChessColor.BLACK) return returnFieldY(pixelposition);
 		return 7 - returnFieldY(pixelposition);
 	}
 
