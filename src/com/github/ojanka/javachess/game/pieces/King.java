@@ -88,9 +88,15 @@ public class King extends Piece {
         return (enemyMoves & cPos) > 0;
     }
 
+
     public boolean isDraw(){
-        return this.getNoCheckPositions().length != 0 && !isCheck();
+        //return this.getNoCheckPositions().length != 0 && !isCheck();
+
+        // get enemies that threaten the king / can they be destroyed? -> no
+        // get positions of directions from which king is threatened. Can allie step on these positions & attacker is no knight -> no
+        return false;
     }
+
 
     public boolean isCheckmate(){
         //TODO: Implement
