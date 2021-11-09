@@ -105,7 +105,7 @@ public class Board {
 		}
 		 */
         toMove.setCurrentPosition(x, y);
-        //EventLogger.getInstance().log(toMove); //FIXME: Eventlogger
+        EventLogger.getInstance().log(toMove);
     }
 
     /**
