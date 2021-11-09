@@ -145,14 +145,16 @@ public class GameScreen extends Screen {
 	public int[] getFieldDimensions(int x, int y) {
 		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
 			int[] resultarray = new int[4];
-			resultarray[0] = p.width / 8 * x;
+			resultarray[0] = p.width - (p.width / 8 * x);
+			//resultarray[0] = p.width / 8 * x;
 			resultarray[1] = p.height / 8 * y;
 			resultarray[2] = p.width / 8;
 			resultarray[3] = p.height / 8;
 			return resultarray;
 		} else {
 			int[] resultarray = new int[4];
-			resultarray[0] = p.width - (p.width / 8 * x);
+			resultarray[0] = p.width / 8 * (x+1);
+			//resultarray[0] = p.width - (p.width / 8 * x);
 			resultarray[1] = p.height - (p.height / 8 * y);
 			resultarray[2] = - p.width / 8;
 			resultarray[3] = - p.height / 8;
@@ -164,9 +166,10 @@ public class GameScreen extends Screen {
 	public void event(String name) {
 		if (name.equals("mouseRelease")) {
 			if (Game.getInstance().myTurn == true) {
-				int x = returnField(p.mouseX);
-				int y = returnField(p.mouseY); 
-				
+				int x = returnFieldX(p.mouseX);
+				int y = returnFieldY(p.mouseY);
+
+				System.out.println(x+" "+y);
 				Piece selectedPiece = Game.getInstance().getBoard().getPiece(x, y);
 				if (selectedPiece != null && selectedPiece.getColor() == Game.getInstance().getTeam()) {
 					this.validPositions = selectedPiece.getValidPositions();
@@ -216,7 +219,7 @@ public class GameScreen extends Screen {
 		return false;
 	}
 
-	private int returnField(int pixelposition) {
+	private int returnFieldY(int pixelposition) {
 		if (Game.getInstance().getTeam() == ChessColor.BLACK) {
 			int counter = 0;
 			int fieldWidth = p.width / 8;
@@ -234,6 +237,10 @@ public class GameScreen extends Screen {
 			}
 			return 7 - counter;
 		}
+	}
+
+	private int returnFieldX(int pixelposition){
+		return 7 - returnFieldY(pixelposition);
 	}
 
 }
