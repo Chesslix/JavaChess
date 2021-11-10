@@ -1,13 +1,9 @@
 package com.github.chesslix.javachess.game;
 
-import javax.xml.validation.TypeInfoProvider;
-
 import com.github.chesslix.javachess.game.pieces.King;
 import com.github.chesslix.javachess.logger.EventLogger;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
-
-import java.util.Objects;
 
 public class Board {
     /**
