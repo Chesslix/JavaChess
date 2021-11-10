@@ -20,8 +20,8 @@ import com.github.chesslix.javachess.util.GameState;
 /**
  * This class handles the communication between two instances of the game.
  * It sends json string called "Packet"
- * Further information about packets at {@link com.github.}
- * @author Oliver
+ * Further information about packets at {@link com.github.chesslix.javachess.networking.Packet}
+ * The instances are told apart as Client (Connecting instance) and Server (accepting instance) but after the handshaking process they act the same
  *
  */
 public class NetworkManager {
@@ -38,6 +38,10 @@ public class NetworkManager {
 		return instance;
 	}
 	
+	/**
+	 * Sends a packet to the remote, to let it know this client is going to leave, and then
+	 * focefully shuts down the networkmanager by killing the thread
+	 */
 	public void shutdown() {
 		if (this.client != null) this.client.sendPacket(new Packet(PacketType.ALL_DISCONNECT, "{}"));
 		this.client = null;
@@ -57,6 +61,12 @@ public class NetworkManager {
 //		}
 	}
 	
+	/**
+	 * Connects to a game at a specific host and port
+	 * @param host
+	 * @param port
+	 * @throws Exception
+	 */
 	public void connect(String host, int port) throws Exception {
 		if (serverSocket != null || client != null) throw new RuntimeException("Close all sockets and servers first!");
 		
@@ -76,6 +86,12 @@ public class NetworkManager {
 		}
 	}
 	
+	/**
+	 * Listen as Server at a specific port
+	 * @param port
+	 * @param gameSettings
+	 * @throws IOException
+	 */
 	public void startServer(int port, GameSettings gameSettings) throws IOException {
 		if (serverSocket != null || client != null) throw new RuntimeException("Close all sockets and servers first!");
 		
@@ -111,6 +127,10 @@ public class NetworkManager {
 		}
 	}
 	
+	/**
+	 * Handshaking process as Server
+	 * @return
+	 */
 	public boolean startCommunication() {
 		while(client.isOpen()) {
 			var packet = client.readPacket();
@@ -128,6 +148,9 @@ public class NetworkManager {
 		return false;
 	}
 	
+	/**
+	 * Handshaking process as Client
+	 */
 	public void startCommunicationWithServer() {
 		this.client.sendPacket(new Packet(PacketType.SB_HANDSHAKE, "{}"));
 		this.client.sendPacket(new Packet(PacketType.SB_JOIN_GAME, "{}"));
@@ -139,6 +162,10 @@ public class NetworkManager {
 		}
 	}
 	
+	/**
+	 * All packets that are not part of the handshaking process are sent to - and handled by this method
+	 * @param packet
+	 */
 	public void handlePacket(Packet packet) {
 		switch (packet.getType()) {
 		case SB_JOIN_GAME:
@@ -193,6 +220,11 @@ public class NetworkManager {
 		return client;
 	}
 	
+	/**
+	 * This class contains the reader and writer to communicate with the remote
+	 * Even though it's called Cliend it is used by the Server and the Client
+	 *
+	 */
 	public static class Client {
 		private Socket socket;
 		private BufferedReader br;
