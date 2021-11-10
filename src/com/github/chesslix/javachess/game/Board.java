@@ -38,7 +38,8 @@ public class Board {
 
     public Board(Piece[] pieces) {
         this.pieces = pieces;
-        setPlayingField();
+        //setPlayingField();
+        setBitmaps();
     }
 
     /**
@@ -84,7 +85,7 @@ public class Board {
 	public void killPiece(Piece toKill) {
 		for (int i = 0; i < pieces.length; i++) {
 			if (pieces[i] == toKill) pieces[i] = null;
-            setPlayingField();
+            //setPlayingField();
 		}
 	}
 	
@@ -108,6 +109,7 @@ public class Board {
 		 */
         Position oldPos = new Position(toMove.getCurrentPosition().getX(), toMove.getCurrentPosition().getY());
         toMove.setCurrentPosition(x, y);
+        this.setBitmaps();
         EventLogger.getInstance().log(toMove, oldPos);
     }
 
@@ -145,6 +147,12 @@ public class Board {
             }
         }
         return bitmap;
+    }
+
+    private void setBitmaps(){
+        setPlayingField();
+        setWhiteBitmap();
+        setBlackBitmap();
     }
 
     // OMG what a funking bad and very long code I just wrote ¦ - nino -> true mate

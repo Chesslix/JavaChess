@@ -129,10 +129,6 @@ public class Game {
 	}
 
 	public void startRound(){
-		this.board.setPlayingField();
-		this.board.setWhiteBitmap();
-		this.board.setBlackBitmap();
-
 		if (kings.get(team).isCheckmate()) {
 			NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_LOSE_GAME, "{}"));
 			this.gameState = GameState.GAME_LOST;
