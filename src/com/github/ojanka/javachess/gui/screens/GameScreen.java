@@ -137,9 +137,9 @@ public class GameScreen extends Screen {
 
 	public void drawPosition(int x, int y, int r, int g, int b) {
 		int[] dimensions = getFieldDimensions(x, y);
-		p.fill(p.color(r, g, b));
+		p.noStroke();
+		p.fill(p.color(r, g, b,      100));
 		p.rect(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
-		p.fill(p.color(0, 0, 0));
 	}
 
 	public int[] getFieldDimensions(int x, int y) {
