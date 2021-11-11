@@ -5,6 +5,11 @@ import com.github.chesslix.javachess.gui.GUIManager;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+
+/**
+ * This Class is to display a button on the Screen. A action could be append to it by overwriting the event method.
+ *
+ */
 public abstract class Button extends Widget {
 	private String label;
 	private int x;
@@ -28,7 +33,10 @@ public abstract class Button extends Widget {
 		
 	}
 	
-	
+	/**
+	 * In this draw mehtod the button gets drawed. It gets it styles and sizes by adding all the properties.
+	 * This button has two states. One when its hovered, the other when not hovering.
+	 */
 	@Override
 	public void draw() {
 		if (this.isHovered()) {
@@ -50,9 +58,14 @@ public abstract class Button extends Widget {
 			p.text(this.label, this.x + this.width / 2, this.y + this.height / 2);
 		}
 	}
-	
+	/**
+	 * This method must be overwritten with the functionallity by clicking on the button.
+	 */
 	public abstract void onClick();
 	
+	/**
+	 * This method calls the onClick Method when mouseRelease event gets submitted.
+	 */
 	@Override
 	public void event(String name) {
 		if (name.equals("mouseRelease")) {
@@ -61,7 +74,10 @@ public abstract class Button extends Widget {
 			}
 		}
 	}
-	
+	/**
+	 * This function looks if the cursor is on the button
+	 * @return boolean -> isHovered or not
+	 */
 	public boolean isHovered() {
 		if (p.mouseX > this.x && p.mouseX < this.x+this.width &&
 			p.mouseY > this.y && p.mouseY < this.y+this.height) {
