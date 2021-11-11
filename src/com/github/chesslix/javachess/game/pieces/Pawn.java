@@ -7,6 +7,12 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+/**
+ * Pawn piece class
+ *
+ * @author Nino Arisona
+ * @version 1.0
+ */
 public class Pawn extends Piece {
 	public Pawn(int startX, int startY, ChessColor color) {
 		super(startX, startY, color);
@@ -19,6 +25,11 @@ public class Pawn extends Piece {
 		return this.getColor() == ChessColor.WHITE ? getWhiteValidPositions() : getBlackValidPositions();
 	}
 
+	/**
+	 * get all movements for white
+	 *
+	 * @return Position[]
+	 */
 	private Position[] getWhiteValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
 		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
@@ -46,6 +57,11 @@ public class Pawn extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
+	/**
+	 * get all movements for black
+	 *
+	 * @return Position[]
+	 */
 	private Position[] getBlackValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
 		long bitboardEnemies = Game.getInstance().getBoard().getEnemiesBitmap(this.getColor());
@@ -73,7 +89,11 @@ public class Pawn extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
-	// gets all possible moves including two step firstTurn for white
+	/**
+	 * returns bitmap with positions calculated with hardcoded bitwise operations for white
+	 *
+	 * @return long
+	 */
 	private long whitePawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;
 		long l1 = (bitboardPawn >>> 1) & 0x7f7f7f7f7f7f7f7fL;
@@ -82,7 +102,11 @@ public class Pawn extends Piece {
 		return (h1<<8) | (bitboardPawn << 8) | (bitboardPawn << 16);
 	}
 
-	// gets all possible moves including two step firstTurn for black
+	/**
+	 * returns bitmap with positions calculated with hardcoded bitwise operations for black
+	 *
+	 * @return long
+	 */
 	private long blackPawnMovesLookUp(long pawnPos){
 		long bitboardPawn = 1L << pawnPos;
 		long l1 = (bitboardPawn >>> 1) & 0x7f7f7f7f7f7f7f7fL;
