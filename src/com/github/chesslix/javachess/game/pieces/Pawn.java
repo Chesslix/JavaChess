@@ -90,9 +90,4 @@ public class Pawn extends Piece {
 		long h1 = l1 | r1;
 		return (h1>>>8) | (bitboardPawn >>> 8) | (bitboardPawn >>> 16);
 	}
-
-	// to disable 2 field moves after first move, get it David? though implementation can be discussed ;)
-	public boolean setfirstTurn(){
-		return this.firstTurn = false;
-	}
 }

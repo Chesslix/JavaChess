@@ -105,6 +105,7 @@ public class Board {
 		 */
         Position oldPos = new Position(toMove.getCurrentPosition().getX(), toMove.getCurrentPosition().getY());
         toMove.setCurrentPosition(x, y);
+        toMove.setFirstTurn();
         this.setBitmaps();
         EventLogger.getInstance().log(toMove, oldPos);
     }

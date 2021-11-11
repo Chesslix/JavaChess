@@ -85,7 +85,7 @@ public class King extends Piece {
     public boolean isCheck(){
         long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
         int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();
-        return (enemyMoves & cPos) > 0;
+        return (enemyMoves & (1L << cPos)) > 0;
     }
 
 

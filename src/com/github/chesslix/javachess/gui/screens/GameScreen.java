@@ -175,9 +175,6 @@ public class GameScreen extends Screen {
 					this.validPositions = selectedPiece.getValidPositions();
 					this.selectedPiece = selectedPiece;
 				} else if(this.selectedPiece != null && arrayContains(this.validPositions, new Position(x, y))) {
-					Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
-					NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + this.selectedPiece.getId().getX() + ",\"y\":" + this.selectedPiece.getId().getY() + "},\"move\":{\"x\":" + x + ",\"y\":" + y + "}}"));
-					// king castling
 					if(this.selectedPiece instanceof King){
 						if(this.selectedPiece.getFirstTurn()){
 							// Kingside
@@ -185,18 +182,20 @@ public class GameScreen extends Screen {
 								Piece rook = Game.getInstance().getBoard().getPiece(7, y);
 								Game.getInstance().getBoard().movePiece(rook, 5, y);
 								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 5 + ",\"y\":" + y + "}}"));
-								rook.setFirstTurn();
 							}
 							// Queenside
 							else if(x == 2) {
 								Piece rook = Game.getInstance().getBoard().getPiece(0, y);
 								Game.getInstance().getBoard().movePiece(rook, 3, y);
 								NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + rook.getId().getX() + ",\"y\":" + rook.getId().getY() + "},\"move\":{\"x\":" + 3 + ",\"y\":" + y + "}}"));
-								rook.setFirstTurn();
 							}
 						}
 					}
-					this.selectedPiece.setFirstTurn();
+
+					Game.getInstance().getBoard().movePiece(this.selectedPiece, x, y);
+					NetworkManager.getInstance().getRemotePlayer().sendPacket(new Packet(PacketType.ALL_MOVE_PIECE, "{\"start\":{\"x\":" + this.selectedPiece.getId().getX() + ",\"y\":" + this.selectedPiece.getId().getY() + "},\"move\":{\"x\":" + x + ",\"y\":" + y + "}}"));
+					// king castling
+
 					Game.getInstance().startRound();	// FIXME: Remove and handle by network manager
 					this.selectedPiece = null;
 					this.validPositions = null;
