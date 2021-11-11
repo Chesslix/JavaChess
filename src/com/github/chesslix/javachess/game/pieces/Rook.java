@@ -7,6 +7,14 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+
+/**
+ * The Rook "Turm" of Chess. This class extends Piece
+ * and is inheriting the main functions.
+ *
+ * @version 1.0
+ * @author David Abderhalden / Nino Arisona
+ */
 public class Rook extends Piece {
 
 	public void setFirstTurn(){
@@ -23,6 +31,15 @@ public class Rook extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Valid Positions are all positions on the Chess Board, the
+	 * Rook can move to. The calculation is made by Bitmaps, heavily dependent
+	 * on them.
+	 *
+	 * The Rook moves horizontally and vertically and can't jump over allies
+	 *
+	 * @return All possible moves as Position Array
+	 */
 	@Override
 	public Position[] getValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());

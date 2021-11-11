@@ -15,8 +15,18 @@ import com.github.chesslix.javachess.game.pieces.King;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+
+/**
+ * Singleton!
+ * Event Logger is responsible for the reading and writing of the
+ * Logs. It is activated by the Board after a piece was moved.
+ *
+ * @version 1.0
+ * @author David Abderhalden
+ */
 public class EventLogger {
     private static EventLogger instance = null;
+    // path to the logger (instanced once in game)
     private String filePath = null;
     private int index = 1;
     private Piece[][] lastboard;
@@ -38,6 +48,10 @@ public class EventLogger {
         return instance;
     }
 
+    /**
+     * Creates a Buffered File Stream which saves the log.
+     * @param log Log to save
+     */
     private void fileOutput(String log) {
         try{
             if(this.filePath == null){
@@ -56,6 +70,11 @@ public class EventLogger {
 
     }
 
+    /**
+     * Reads a log file
+     * @param path the path to the log file
+     * @return Content of log file as String
+     */
     private String fileInput(String path){
         StringBuilder fileContent = new StringBuilder();
         try{
@@ -72,6 +91,12 @@ public class EventLogger {
         return fileContent.toString();
     }
 
+    /**
+     * Converts Piece and old position in Chess Notation and writes it
+     * to the log
+     * @param p The piece that was moved
+     * @param oldPos The last position of the piece
+     */
     public void log(Piece p, Position oldPos){
         // Vars
         System.out.println(p.getCurrentPosition().getY()+" "+oldPos.getY());
