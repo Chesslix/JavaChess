@@ -5,6 +5,10 @@ import com.github.chesslix.javachess.gui.GUIManager;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * The TextField class is used to display a Inputfield to the user. You have to pass a char array with all chars wich are valid to enter into the textfield.
+ */
+
 public class TextField extends Widget {
 	public static char[] ALL_DIGITS = {
 			'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
@@ -40,6 +44,9 @@ public class TextField extends Widget {
 		sb = new StringBuilder();
 	}
 
+	/**
+	 * In the draw method the Textfield gets builded and drawn down to the GUI
+	 */
 	@Override
 	public void draw() {
 		p.fill(p.color(0, 0, 0));
@@ -59,7 +66,10 @@ public class TextField extends Widget {
 	public void dispatch() {
 		
 	}
-	
+	/**
+	 * This function looks if the cursor is on the Inputfield
+	 * @return boolean -> isHovered or not
+	 */
 	public boolean isHovered() {
 		if (p.mouseX > this.x && p.mouseX < this.x+this.width &&
 			p.mouseY > this.y && p.mouseY < this.y+this.height) {
@@ -67,6 +77,9 @@ public class TextField extends Widget {
 		} else return false;
 	}
 
+	/**
+	 * This method handles the Keyboardinputs and updates the result string.
+	 */
 	@Override
 	public void event(String name) {
 		if (this.isActive()) {
