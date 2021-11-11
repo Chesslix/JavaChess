@@ -222,7 +222,7 @@ public class NetworkManager {
 	
 	/**
 	 * This class contains the reader and writer to communicate with the remote
-	 * Even though it's called Cliend it is used by the Server and the Client
+	 * Even though it's called Client it is used by the Server and the Client
 	 *
 	 */
 	public static class Client {

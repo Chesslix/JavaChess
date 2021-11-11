@@ -6,6 +6,10 @@ import com.github.chesslix.javachess.gui.widgets.MainMenuButton;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * A simple screen which displays a message and a back to menu-button
+ *
+ */
 public class EndGameScreen extends Screen{
 
     private PApplet p = GUIManager.getInstance().getApplet();

@@ -1,20 +1,25 @@
 package com.github.chesslix.javachess.gui;
 
 import com.github.chesslix.javachess.game.Game;
-import com.github.chesslix.javachess.gui.screens.EndGameScreen;
-import com.github.chesslix.javachess.gui.screens.GameScreen;
 import com.github.chesslix.javachess.gui.screens.MainMenu;
 import com.github.chesslix.javachess.gui.screens.Screen;
 import com.github.chesslix.javachess.util.ChessColor;
 
 import processing.core.PApplet;
 
+/**
+ * The GuiManager handles the processing-instance and all screens
+ *
+ */
 public class GUIManager {
 	private static GUIManager instance;
 	private boolean running = false;
 	private PApplet applet;
 	private Screen screen;
 	
+	/**
+	 * Starts the gui. This must only be called once
+	 */
 	public void startGUI() {
 		if (this.isRunning()) {
 			throw new IllegalStateException("Cannot start GUI twice");

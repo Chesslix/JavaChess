@@ -3,8 +3,6 @@ package com.github.chesslix.javachess.gui.screens;
 import com.github.chesslix.javachess.game.Game;
 import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.game.pieces.King;
-import com.github.chesslix.javachess.game.pieces.Pawn;
-import com.github.chesslix.javachess.game.pieces.Rook;
 import com.github.chesslix.javachess.gui.GUIManager;
 import com.github.chesslix.javachess.networking.NetworkManager;
 import com.github.chesslix.javachess.networking.Packet;
@@ -15,6 +13,11 @@ import com.github.chesslix.javachess.util.Position;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * The main screen of the game.
+ * It draws the board and all pieces on it. It handles the selection of the pieces.
+ *
+ */
 public class GameScreen extends Screen {
 	private PApplet p = GUIManager.getInstance().getApplet();
 	private PImage img;

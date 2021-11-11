@@ -12,6 +12,10 @@ import com.github.chesslix.javachess.util.ArrayUtils;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * Menu which allows the user the enter a ip and a port to join to a remote
+ *
+ */
 public class JoinGameMenu extends Screen {
 	private PApplet p = GUIManager.getInstance().getApplet();
 

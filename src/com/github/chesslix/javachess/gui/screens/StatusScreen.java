@@ -5,6 +5,11 @@ import com.github.chesslix.javachess.gui.GUIManager;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * Screen which shows a message to a player and provides a runnable which gets called on the custom solve event
+ * @author Oliver
+ *
+ */
 public class StatusScreen extends Screen {
 	
 	private static final PApplet p = GUIManager.getInstance().getApplet();

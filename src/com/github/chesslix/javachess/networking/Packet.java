@@ -48,7 +48,7 @@ public class Packet {
 	 * SB:  Serverbound:             server <-  client
 	 * CB:  Clientbound:             server  -> client
 	 * ALL: Server- and Clientbound: server <-> client
-	 * @author Oliver
+	 * @version 1.0
 	 *
 	 */
 	public static enum PacketType {

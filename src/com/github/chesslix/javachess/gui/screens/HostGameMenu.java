@@ -1,6 +1,5 @@
 package com.github.chesslix.javachess.gui.screens;
 
-import com.github.chesslix.javachess.game.Game;
 import com.github.chesslix.javachess.gui.GUIManager;
 import com.github.chesslix.javachess.gui.widgets.Button;
 import com.github.chesslix.javachess.gui.widgets.MainMenuButton;
@@ -12,6 +11,10 @@ import com.github.chesslix.javachess.util.GameSettings;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+/**
+ * Menu which allows the user to enter a port and then start the game as host
+ *
+ */
 public class HostGameMenu extends Screen {
 	
 	private PApplet p = GUIManager.getInstance().getApplet();

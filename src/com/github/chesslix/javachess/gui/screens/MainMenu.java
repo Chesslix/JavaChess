@@ -1,17 +1,19 @@
 package com.github.chesslix.javachess.gui.screens;
 
-import com.github.chesslix.javachess.game.Game;
 import com.github.chesslix.javachess.gui.GUIManager;
 import com.github.chesslix.javachess.gui.widgets.Button;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PImage;
 
+/**
+ * The main menu is shown to the user at the very beginning of the game. It allows them to host or join a game.
+ * It also contains a button to exit the game
+ *
+ */
 public class MainMenu extends Screen {
 
 	private PApplet p = GUIManager.getInstance().getApplet();
-	private final PImage background_img = p.loadImage("./assets/textures/chess_board.png");
 
 	@Override
 	public void init() {		
