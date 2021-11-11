@@ -6,10 +6,12 @@ import com.github.chesslix.javachess.gui.widgets.Button;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
+import processing.core.PImage;
 
 public class MainMenu extends Screen {
 
 	private PApplet p = GUIManager.getInstance().getApplet();
+	private final PImage background_img = p.loadImage("./assets/textures/chess_board.png");
 
 	@Override
 	public void init() {		
@@ -46,7 +48,9 @@ public class MainMenu extends Screen {
 
 	@Override
 	public void draw() {
-		p.background(9, 77, 195);
+		//p.image(background_img, 0, 0, p.width, p.height);
+		//p.background(0, 100);
+		p.background(115, 70, 54);
 		p.textAlign(PConstants.CENTER, PConstants.CENTER);
 		p.textSize(60);
 		p.text("Welcome to JavaChess", p.sketchWidth() / 2, 200);

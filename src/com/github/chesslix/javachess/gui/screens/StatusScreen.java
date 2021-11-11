@@ -31,7 +31,7 @@ public class StatusScreen extends Screen {
 	
 	@Override
 	public void draw() {
-		p.background(9, 77, 195);
+		p.background(115, 70, 54);
 		p.textAlign(PConstants.CENTER, PConstants.CENTER);
 		p.text(this.statusMessage, p.sketchWidth() / 2, 100);
 		super.draw();

@@ -55,7 +55,7 @@ public class HostGameMenu extends Screen {
 	@Override
 	public void draw() {
 		// TODO Auto-generated method stub
-		p.background(9, 77, 195);
+		p.background(115, 70, 54);
 		p.textAlign(PConstants.CENTER, PConstants.CENTER);
 		p.textSize(60);
 		p.text("Host a Game!", p.sketchWidth() / 2, 100);

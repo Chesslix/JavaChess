@@ -45,12 +45,12 @@ public class TextField extends Widget {
 		p.fill(p.color(0, 0, 0));
 		
 		if (this.active) {
-			p.stroke(p.color(255, 255, 255));
+			p.stroke(p.color(245, 236, 203));
 		} else p.noStroke();
 		
 		p.rect(x, y, width, height);
 		
-		p.fill(p.color(255, 255, 255));
+		p.fill(p.color(245, 236, 203));
 		p.textAlign(PConstants.LEFT, PConstants.CENTER);
 		p.text(this.getText(), this.x + 5, this.y + this.height / 2);
 	}

@@ -32,12 +32,12 @@ public abstract class Button extends Widget {
 	@Override
 	public void draw() {
 		if (this.isHovered()) {
-			p.fill(p.color(0, 0, 0));
-			p.stroke(p.color(255, 255, 255));
+			p.fill(p.color(131, 151, 95));
+			p.stroke(p.color(245, 236, 203));
 			p.rect(x, y, width, height);
 			
 			p.noStroke();
-			p.fill(p.color(255, 255, 255));
+			p.fill(p.color(245, 236, 203));
 			p.textAlign(PConstants.CENTER, PConstants.CENTER);
 			p.text(this.label, this.x + this.width / 2, this.y + this.height / 2);
 		} else {
@@ -45,7 +45,7 @@ public abstract class Button extends Widget {
 			p.noStroke();
 			p.rect(x, y, width, height);
 			
-			p.fill(p.color(255, 255, 255));
+			p.fill(p.color(245, 236, 203));
 			p.textAlign(PConstants.CENTER, PConstants.CENTER);
 			p.text(this.label, this.x + this.width / 2, this.y + this.height / 2);
 		}
