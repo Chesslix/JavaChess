@@ -13,7 +13,7 @@ import com.github.chesslix.javachess.util.Position;
  * and is inheriting the main functions.
  *
  * @version 1.0
- * @author David Abderhalden / Nino Arisona
+ * @author David Abderhalden
  */
 public class Rook extends Piece {
 

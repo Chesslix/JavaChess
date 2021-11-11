@@ -7,6 +7,13 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+/**
+ * The Knight "Springer" of Chess. This class extends Piece
+ * and is inheriting the main functions.
+ *
+ * @version 1.0
+ * @author Nino Arisona
+ */
 public class Knight extends Piece {
 
 	public Knight(int startX, int startY, ChessColor color) {
@@ -14,6 +21,15 @@ public class Knight extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Valid Positions are all positions on the Chess Board, the
+	 * Knight can move to. The calculation is made by Bitmaps, heavily dependent
+	 * on them.
+	 *
+	 * The Knight can move in an L shape and jumps over figures
+	 *
+	 * @return All possible moves as Position Array
+	 */
 	@Override
 	public Position[] getValidPositions() {
 		// get bitboard allies marked as 1
@@ -39,6 +55,11 @@ public class Knight extends Piece {
 		return validPositions.toArray(Position[]::new);
 	}
 
+	/**
+	 * The possible Moves of the knight with hardcoded bitwise operations
+	 * @param knightPos the current position of the piece
+	 * @return all possible moves as bitmap (long)
+	 */
 	private long knightMovesLookUp(long knightPos){
 			// super complex hardcore bithacks! :) Not :)
 			long bitboardKnight = 1L << knightPos;

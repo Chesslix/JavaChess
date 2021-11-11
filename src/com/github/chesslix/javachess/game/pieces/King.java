@@ -7,6 +7,13 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+/**
+ * The King "Koenig" of Chess. This class extends Piece
+ * and is inheriting the main functions.
+ *
+ * @version 1.0
+ * @author Nino Arisona / David Abderhalden
+ */
 public class King extends Piece {
     public void setFirstTurn(){
         this.firstTurn = false;
@@ -18,6 +25,16 @@ public class King extends Piece {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Valid Positions are all positions on the Chess Board, the
+     * King can move to. The calculation is made by Bitmaps, heavily dependent
+     * on them.
+     *
+     * The King can move to all positions surounding him.
+     * He can also make a castling under certain conditions (queen side / king side)
+     *
+     * @return All possible moves as Position Array
+     */
     @Override
     public Position[] getValidPositions() {
         long bitboard = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
@@ -60,6 +77,11 @@ public class King extends Piece {
         return validPositions.toArray(Position[]::new);
     }
 
+    /**
+     * The possible Moves of the king with hardcoded bitwise operations
+     * @param kingPos the current position of the piece
+     * @return all possible moves as bitmap (long)
+     */
     private long kingMovesLookUp(long kingPos) {
         // super complex hardcore bithacks! :)
         long bitboardKing = 1L << kingPos;
@@ -82,6 +104,10 @@ public class King extends Piece {
         return validPositions.toArray(Position[]::new);
     }
 
+    /**
+     * Calculates if king is standing in a check position. Dependent on Bitmap of enemy.
+     * @return boolean true if king is check
+     */
     public boolean isCheck(){
         long enemyMoves = Game.getInstance().getBoard().getAllPossibleMovesBoard(this.getColor().getOpposite());
         int cPos = this.getCurrentPosition().getY() * 8 + this.getCurrentPosition().getX();

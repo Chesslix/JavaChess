@@ -177,6 +177,11 @@ public class EventLogger {
         this.index++;
     }
 
+    /**
+     * Translates the X coordinate of the board to the real Chess Board Site
+     * @param pos the Position to translate
+     * @return parsed Position as String
+     */
     private String translatePositionXToNotation(Position pos){
         HashMap<Integer, String> dict = new HashMap<>(){{
             put(0, "a");
@@ -191,6 +196,11 @@ public class EventLogger {
         return dict.get(pos.getX());
     }
 
+    /**
+     * Translates the X coordinate of the board to the real Chess Board Site
+     * @param pos the Position to translate
+     * @return parsed Position as String
+     */
     private String translatePositionYToNotation(Position pos){
         return String.valueOf(pos.getY()+1);
     }
