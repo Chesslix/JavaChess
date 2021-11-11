@@ -7,6 +7,13 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+/**
+ * The Bishop "Laeufer" of Chess. This class extends Piece
+ * and is inheriting the main functions.
+ *
+ * @version 1.0
+ * @author David Abderhalden / Nino Arisona
+ */
 public class Bishop extends Piece {
 
 	public Bishop(int startX, int startY, ChessColor color) {
@@ -14,6 +21,15 @@ public class Bishop extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Valid Positions are all positions on the Chess Board, the
+	 * Bishop can move to. The calculation is made by Bitmaps, heavily dependent
+	 * on them.
+	 *
+	 * The Bishop moves diagonally and can't jump over allies
+	 *
+	 * @return All possible moves as Position Array
+	 */
 	@Override
 	public Position[] getValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());

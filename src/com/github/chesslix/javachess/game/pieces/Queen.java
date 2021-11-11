@@ -7,6 +7,13 @@ import com.github.chesslix.javachess.game.Piece;
 import com.github.chesslix.javachess.util.ChessColor;
 import com.github.chesslix.javachess.util.Position;
 
+/**
+ * The Queen "Koenigin" of Chess. This class extends Piece
+ * and is inheriting the main functions.
+ *
+ * @version 1.0
+ * @author David Abderhalden
+ */
 public class Queen extends Piece {
 
 	public Queen(int startX, int startY, ChessColor color) {
@@ -14,6 +21,16 @@ public class Queen extends Piece {
 		// TODO Auto-generated constructor stub
 	}
 
+
+	/**
+	 * Valid Positions are all positions on the Chess Board, the
+	 * Queen can move to. The calculation is made by Bitmaps, heavily dependent
+	 * on them.
+	 *
+	 * The Queen combines all the moves from Rook and Bishop
+	 *
+	 * @return All possible moves as Position Array
+	 */
 	@Override
 	public Position[] getValidPositions() {
 		long bitboardAllies = Game.getInstance().getBoard().getAlliesBitmap(this.getColor());
